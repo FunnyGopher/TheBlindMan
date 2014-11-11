@@ -23,9 +23,9 @@ namespace TheBlindMan
                 Game.Window.ClientBounds.Height);
         }
 
-        protected override void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            image = content.Load<Texture2D>("Images/Backgrounds/Controls");
+            image = content.Load<Texture2D>(@"Images/Backgrounds/Controls");
             base.LoadContent();
         }
 

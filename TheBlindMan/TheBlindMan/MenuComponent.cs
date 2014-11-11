@@ -44,7 +44,7 @@ namespace TheBlindMan
             }
         }
 
-        public MenuComponent(Game game,
+        public MenuComponent(TheBlindManGame game,
             SpriteBatch spriteBatch,
             SpriteFont spriteFont,
             string[] menuItems)

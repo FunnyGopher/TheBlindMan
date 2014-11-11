@@ -86,6 +86,7 @@ namespace TheBlindMan
             base.Initialize();
 
             startScreen = new StartScreen(this, spriteBatch);
+            startScreen.LoadContent(Content);
             Components.Add(startScreen);
 
             playScreen = new PlayScreen(this, spriteBatch);
@@ -100,7 +101,7 @@ namespace TheBlindMan
             creditScreen.LoadContent(Content);
             Components.Add(creditScreen);
 
-            ActiveScreen = StartScreen;
+            activeScreen = StartScreen;
         }
         #endregion
 
@@ -137,7 +138,7 @@ namespace TheBlindMan
             activeScreen.Update(gameTime);
 
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
             base.Update(gameTime);
@@ -157,6 +158,7 @@ namespace TheBlindMan
 
             spriteBatch.Begin();
             base.Draw(gameTime);
+            activeScreen.Draw(gameTime);
             spriteBatch.End();
         }
         #endregion

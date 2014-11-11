@@ -29,6 +29,7 @@ namespace TheBlindMan
         public StartScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
+            this.game = game;
             menuItems = new string[]{ "Start Game", "Controls", "Credits", "End Game" };
             imageRectangle = new Rectangle(
                 0, 0, Game.Window.ClientBounds.Width,
@@ -36,13 +37,13 @@ namespace TheBlindMan
             hasPressedEnter = false;
         }
 
-        protected override void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            SpriteFont font = content.Load<SpriteFont>("Font/menuFont");
+            SpriteFont font = content.Load<SpriteFont>(@"Font/menuFont");
             menuComponent = new MenuComponent(game, spriteBatch, font, menuItems);
             Components.Add(menuComponent);
 
-            image = content.Load<Texture2D>("Images/Backgrounds/Title");
+            image = content.Load<Texture2D>(@"Images/Backgrounds/Title");
             base.LoadContent();
         }
 

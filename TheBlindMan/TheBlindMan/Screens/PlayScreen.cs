@@ -12,7 +12,6 @@ namespace TheBlindMan
 {
     public class PlayScreen : GameScreen
     {
-        KeyboardState keyboardState;
         Texture2D image;
         CarManager carManager;
         SoundEffect bgSound;
@@ -34,7 +33,7 @@ namespace TheBlindMan
         public override void LoadContent(ContentManager content)
         {
             Console.WriteLine("Loading Content For PlayScreen");
-            this.image = content.Load<Texture2D>("Images/Backgrounds/Level");
+            this.image = content.Load<Texture2D>(@"Images/Backgrounds/Level");
             this.bgSound = content.Load<SoundEffect>(@"Audio/trafAmbi");
             this.bgSoundInstance = bgSound.CreateInstance();
             carManager.LoadContent(content);
@@ -47,9 +46,8 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
 
-            keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Escape))
-                game.Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || GamePad.GetState(Players.OldMan.PlayerIndex).Buttons.Back == ButtonState.Pressed)
+                game.ActiveScreen = game.StartScreen;
 
             if (carManager.Count < 10)
             {
@@ -94,8 +92,8 @@ namespace TheBlindMan
             base.Stop();
             if(bgSoundInstance.State == SoundState.Playing)
                 bgSoundInstance.Stop();
-
             bgSoundInstance.Dispose();
+            carManager.Clear();
         }
     }
 }
