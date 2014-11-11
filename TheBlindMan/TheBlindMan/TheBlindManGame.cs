@@ -27,11 +27,6 @@ namespace TheBlindMan
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        KeyboardState keyboardState;
-        KeyboardState oldKeyboardState;
-        GamePadState gamePadState;
-        GamePadState oldGamePadState;
-
         GameScreen activeScreen;
         StartScreen startScreen;
         InfoScreen infoScreen;
@@ -43,15 +38,30 @@ namespace TheBlindMan
             get { return activeScreen; }
             set
             {
-                activeScreen.Hide();
+                activeScreen.Stop();
                 activeScreen = value;
-                activeScreen.Show();
+                activeScreen.Start();
             }
         }
 
         public StartScreen StartScreen
         {
             get { return startScreen; }
+        }
+
+        public PlayScreen PlayScreen
+        {
+            get { return playScreen; }
+        }
+
+        public InfoScreen InfoScreen
+        {
+            get { return infoScreen; }
+        }
+
+        public CreditScreen CreditScreen
+        {
+            get { return creditScreen; }
         }
 
         public TheBlindManGame()
@@ -74,14 +84,25 @@ namespace TheBlindMan
         protected override void Initialize()
         {
             base.Initialize();
+
+            startScreen = new StartScreen(this, spriteBatch);
+            Components.Add(startScreen);
+
+            playScreen = new PlayScreen(this, spriteBatch);
+            playScreen.LoadContent(Content);
+            Components.Add(playScreen);
+
+            infoScreen = new InfoScreen(this, spriteBatch);
+            infoScreen.LoadContent(Content);
+            Components.Add(infoScreen);
+
+            creditScreen = new CreditScreen(this, spriteBatch);
+            creditScreen.LoadContent(Content);
+            Components.Add(creditScreen);
+
+            ActiveScreen = StartScreen;
         }
         #endregion
-
-        private void InitializePlayers()
-        {
-            Players.OldMan = new OldMan(PlayerIndex.One, 300, 150);
-            Players.Dog = new Dog(PlayerIndex.Two, 300, 150);
-        }
 
         #region Load Content
         /// <summary>
@@ -91,32 +112,6 @@ namespace TheBlindMan
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            startScreen = new StartScreen(this,
-                spriteBatch,
-                Content.Load<SpriteFont>("Font/menuFont"),
-                Content.Load<Texture2D>("Images/Backgrounds/Title"));
-            Components.Add(startScreen);
-            startScreen.Hide();
-
-            playScreen = new PlayScreen(this, spriteBatch);
-            playScreen.LoadContent(Content);
-            Components.Add(playScreen);
-            playScreen.Hide();
-
-            
-            infoScreen = new InfoScreen(this, spriteBatch,
-                Content.Load<Texture2D>("Images/Backgrounds/Controls"));
-            Components.Add(infoScreen);
-            infoScreen.Hide();
-
-            creditScreen = new CreditScreen(this, spriteBatch,
-                Content.Load<Texture2D>("Images/Backgrounds/Credits"));
-            Components.Add(creditScreen);
-            creditScreen.Hide();
-
-            activeScreen = startScreen;
-            activeScreen.Show();
         }
         #endregion
 
@@ -139,75 +134,17 @@ namespace TheBlindMan
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            keyboardState = Keyboard.GetState();
-            gamePadState = GamePad.GetState(PlayerIndex.One);
-
-            HandleStartScreen();
+            activeScreen.Update(gameTime);
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
             base.Update(gameTime);
-            oldKeyboardState = keyboardState;
-            oldGamePadState = gamePadState;
         }
         #endregion
 
-        private void HandleStartScreen()
-        {
-            if (activeScreen == startScreen)
-            {
-                if (CheckKey(Keys.Enter) || CheckButton(Buttons.A))
-                {
-                    switch (startScreen.SelectedIndex)
-                    {
-                        case 0:
-                            activeScreen.Hide();
-                            activeScreen = playScreen;
-                            activeScreen.Show();
-                            break;
-                        case 1:
-                            activeScreen.Hide();
-                            activeScreen = infoScreen;
-                            activeScreen.Show();
-                            break;
-                        case 2:
-                            activeScreen.Hide();
-                            activeScreen = creditScreen;
-                            activeScreen.Show();
-                            break;
-                        case 3:
-                            this.Exit();
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                if (CheckKey(Keys.Escape) || CheckButton(Buttons.Back))
-                {
-                    activeScreen.Hide();
-                    activeScreen = startScreen;
-                    activeScreen.Show();
-                }
-            }
-        }
-
-        private void HandlePlayScreen()
-        {
-
-        }
-
-        private bool CheckKey(Keys theKey)
-        {
-            return keyboardState.IsKeyUp(theKey) && oldKeyboardState.IsKeyDown(theKey);
-        }
-
-        private bool CheckButton(Buttons theButton)
-        {
-            return gamePadState.IsButtonUp(theButton) && oldGamePadState.IsButtonDown(theButton);
-        }
+        
 
         #region Draw
         /// <summary>
@@ -221,8 +158,6 @@ namespace TheBlindMan
             spriteBatch.Begin();
             base.Draw(gameTime);
             spriteBatch.End();
-
-            
         }
         #endregion
     }

@@ -24,8 +24,10 @@ namespace TheBlindMan
         {
             this.game = game;
             carManager = new CarManager(game);
+
             Players.OldMan = new OldMan(PlayerIndex.One, 540, 900);
             Players.Dog = new Dog(PlayerIndex.Two, 570, 920);
+
             winZone = new Rectangle(460, 100, 60, 40);
         }
 
@@ -80,17 +82,19 @@ namespace TheBlindMan
             Players.Dog.Draw(gameTime, spriteBatch);
         }
 
-        public override void Show()
+        public override void Start()
         {
-            base.Show();
+            base.Start();
             bgSoundInstance = bgSound.CreateInstance();
             bgSound.Play();
         }
 
-        public override void Hide()
+        public override void Stop()
         {
-            base.Hide();
-            bgSoundInstance.Stop();
+            base.Stop();
+            if(bgSoundInstance.State == SoundState.Playing)
+                bgSoundInstance.Stop();
+
             bgSoundInstance.Dispose();
         }
     }

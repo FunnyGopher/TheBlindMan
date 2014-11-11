@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace TheBlindMan
 {
@@ -14,13 +15,18 @@ namespace TheBlindMan
         Texture2D image;
         Rectangle imageRectangle;
 
-        public InfoScreen(TheBlindManGame game, SpriteBatch spriteBatch, Texture2D image)
+        public InfoScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
-            this.image = image;
             imageRectangle = new Rectangle(
                 0, 0, Game.Window.ClientBounds.Width,
                 Game.Window.ClientBounds.Height);
+        }
+
+        protected override void LoadContent(ContentManager content)
+        {
+            image = content.Load<Texture2D>("Images/Backgrounds/Controls");
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)

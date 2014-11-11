@@ -28,6 +28,7 @@ namespace TheBlindMan
         {
             this.game = game;
             this.spriteBatch = spriteBatch;
+            Hide();
         }
 
         public override void Initialize()
@@ -55,6 +56,16 @@ namespace TheBlindMan
                 if (component is DrawableGameComponent &&
                     ((DrawableGameComponent)component).Visible)
                     ((DrawableGameComponent)component).Draw(gameTime);
+        }
+
+        public virtual void Start()
+        {
+            Show();
+        }
+
+        public virtual void Stop()
+        {
+            Hide();
         }
 
         public virtual void Show()

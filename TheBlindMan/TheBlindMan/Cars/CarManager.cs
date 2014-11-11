@@ -11,7 +11,7 @@ namespace TheBlindMan
 {
     class CarManager
     {
-        private Game game;
+        private TheBlindManGame game;
         private List<Car> cars;
         private List<Car> carsToRemove;
         private List<Point> spawnLocations;
@@ -29,7 +29,7 @@ namespace TheBlindMan
             }
         }
 
-        public CarManager(Game game)
+        public CarManager()
         {
             cars = new List<Car>();
             carsToRemove = new List<Car>();
