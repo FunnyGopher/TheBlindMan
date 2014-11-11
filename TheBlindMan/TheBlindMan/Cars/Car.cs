@@ -61,6 +61,12 @@ namespace TheBlindMan
             }
         }
 
+        public Car(Car car)
+            : this(car.animation, car.boundsHeight) {}
+
+        public Car(Animation animation, int boundsHeight)
+            : this(animation, 0, 0, 0, boundsHeight) {}
+
         public Car(Animation animation, float x, float y, float speed, int boundsHeight) 
         {
             this.x = x;
@@ -77,6 +83,7 @@ namespace TheBlindMan
         public virtual void Update(GameTime gameTime)
         {
             x += speed * (float)(gameTime.ElapsedGameTime.Milliseconds / 200f);
+            UpdateBounds();
             emitter.Position = new Vector3(X / 8f, 0, Y / 8f);
             PlaySound();
 

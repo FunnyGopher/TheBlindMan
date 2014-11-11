@@ -13,20 +13,22 @@ namespace TheBlindMan
     {
         private List<Car> cars;
         private List<Car> removedCars;
-        private List<Animation> animations;
         private List<Point> spawnLocations;
         private Random random = new Random();
 
         private SoundEffect soundEffect;
         private List<SoundEffect> soundEffects;
 
+        private List<Car> premadeCars;
+
         public CarManager()
         {
             cars = new List<Car>();
             removedCars = new List<Car>();
-            animations = new List<Animation>();
             spawnLocations = new List<Point>();
             soundEffects = new List<SoundEffect>();
+
+            premadeCars = new List<Car>();
 
             Point spawn1 = new Point(-130, 280);
             Point spawn2 = new Point(-130, 355);
@@ -49,13 +51,12 @@ namespace TheBlindMan
 
         public virtual void LoadContent(ContentManager content)
         {
-            Animation carOne = new Animation(content.Load<Texture2D>(@"Images/Cars/car_sheet"),
+            Animation carAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/car_sheet"),
                new Point(128, 40), new Point(0, 0), new Point(2, 1), 600);
-            animations.Add(carOne);
+            Car car = new Car(carAnim, 20);
+            premadeCars.Add(car);
 
             soundEffects.Add(content.Load<SoundEffect>(@"Audio/carSound1"));
-            //soundEffects.Add(content.Load<SoundEffect>(@"Audio/carSound2"));
-            //soundEffects.Add(content.Load<SoundEffect>(@"Audio/carSound3"));
         }
 
         public virtual void Update(GameTime gameTime)
@@ -94,7 +95,8 @@ namespace TheBlindMan
 
         private Car GenerateCar()
         {
-            int animationIndex = random.Next(0, animations.Count);
+            //int animationIndex = random.Next(0, animations.Count);
+            int premadeCarIndex = random.Next(0, premadeCars.Count);
             int spawnIndex = random.Next(0, spawnLocations.Count);
             int soundIndex = random.Next(0, soundEffects.Count);
 
@@ -107,11 +109,11 @@ namespace TheBlindMan
             {
                 speed *= -1;
             }
-            Car newCar = new Car(animations[animationIndex],
-                (float)spawnLocations[spawnIndex].X,
-                (float)spawnLocations[spawnIndex].Y,
-                speed);
 
+            Car newCar = new Car(premadeCars[premadeCarIndex]);
+            newCar.X = (float)spawnLocations[spawnIndex].X;
+            newCar.Y = (float)spawnLocations[spawnIndex].Y;
+            newCar.Speed = speed;
             newCar.SoundEffect = soundEffects[soundIndex];
 
             return newCar;
