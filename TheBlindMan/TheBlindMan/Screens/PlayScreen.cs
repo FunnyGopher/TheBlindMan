@@ -50,7 +50,7 @@ namespace TheBlindMan
             if (keyboardState.IsKeyDown(Keys.Escape))
                 game.Exit();
 
-            if (carManager.CarCount() < 10)
+            if (carManager.Count < 10)
             {
                 carManager.AddCar();
             }

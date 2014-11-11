@@ -12,23 +12,30 @@ namespace TheBlindMan
     class CarManager
     {
         private List<Car> cars;
-        private List<Car> removedCars;
+        private List<Car> carsToRemove;
         private List<Point> spawnLocations;
         private Random random = new Random();
 
-        private SoundEffect soundEffect;
         private List<SoundEffect> soundEffects;
 
-        private List<Car> premadeCars;
+        private Car[] premadeCars;
+
+        public int Count
+        {
+            get
+            {
+                return cars.Count;
+            }
+        }
 
         public CarManager()
         {
             cars = new List<Car>();
-            removedCars = new List<Car>();
+            carsToRemove = new List<Car>();
             spawnLocations = new List<Point>();
             soundEffects = new List<SoundEffect>();
 
-            premadeCars = new List<Car>();
+            premadeCars = new Car[1];
 
             Point spawn1 = new Point(-130, 280);
             Point spawn2 = new Point(-130, 355);
@@ -54,30 +61,31 @@ namespace TheBlindMan
             Animation carAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/car_sheet"),
                new Point(128, 40), new Point(0, 0), new Point(2, 1), 600);
             Car car = new Car(carAnim, 20);
-            premadeCars.Add(car);
+            premadeCars[0] = car;
 
             soundEffects.Add(content.Load<SoundEffect>(@"Audio/carSound1"));
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (Car car in this.cars)
+            foreach (Car car in cars)
             {
                 car.Update(gameTime);
                 if (car.X  < -300 || car.X > 1300)
                 {
-                    removedCars.Add(car);
+                    carsToRemove.Add(car);
                 }
             }
-            foreach (Car car in this.removedCars)
+            foreach (Car car in carsToRemove)
             {
                 cars.Remove(car);
             }
+            carsToRemove.Clear();
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (Car car in this.cars)
+            foreach (Car car in cars)
             {
                 car.Draw(gameTime, spriteBatch);
             }
@@ -87,6 +95,7 @@ namespace TheBlindMan
         {
             if (numberOfCars <= 0)
                 return;
+
             for (int index = 0; index < numberOfCars; index++)
             {
                 cars.Add(GenerateCar());
@@ -95,8 +104,7 @@ namespace TheBlindMan
 
         private Car GenerateCar()
         {
-            //int animationIndex = random.Next(0, animations.Count);
-            int premadeCarIndex = random.Next(0, premadeCars.Count);
+            int premadeCarIndex = random.Next(0, premadeCars.Length);
             int spawnIndex = random.Next(0, spawnLocations.Count);
             int soundIndex = random.Next(0, soundEffects.Count);
 
@@ -110,18 +118,13 @@ namespace TheBlindMan
                 speed *= -1;
             }
 
-            Car newCar = new Car(premadeCars[premadeCarIndex]);
-            newCar.X = (float)spawnLocations[spawnIndex].X;
-            newCar.Y = (float)spawnLocations[spawnIndex].Y;
-            newCar.Speed = speed;
-            newCar.SoundEffect = soundEffects[soundIndex];
+            Car car = new Car(premadeCars[premadeCarIndex]);
+            car.X = (float)spawnLocations[spawnIndex].X;
+            car.Y = (float)spawnLocations[spawnIndex].Y;
+            car.Speed = speed;
+            car.SoundEffect = soundEffects[soundIndex];
 
-            return newCar;
-        }
-
-        public int CarCount()
-        {
-            return cars.Count;
+            return car;
         }
     }
 }

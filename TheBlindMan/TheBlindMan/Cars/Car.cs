@@ -82,22 +82,18 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
-            x += speed * (float)(gameTime.ElapsedGameTime.Milliseconds / 200f);
-            UpdateBounds();
-            emitter.Position = new Vector3(X / 8f, 0, Y / 8f);
-            PlaySound();
-
             animation.Update(gameTime);
+            Move(gameTime);
+            PlaySound();
+            Collide();
+            
+        }
 
-            if (bounds.Intersects(Players.OldMan.Bounds))
-            {
-                Players.OldMan.Hit();
-            }
-
-            if (bounds.Intersects(Players.Dog.Bounds))
-            {
-                Players.Dog.Hit();
-            }
+        private void Move(GameTime gameTime)
+        {
+            x += speed * (float)(gameTime.ElapsedGameTime.Milliseconds / 200f);
+            emitter.Position = new Vector3(X / 8f, 0, Y / 8f);
+            UpdateBounds();
         }
 
         private void UpdateBounds()
@@ -122,6 +118,19 @@ namespace TheBlindMan
             else if (drivingSoundInstance.State == SoundState.Playing)
             {
                 drivingSoundInstance.Stop();
+            }
+        }
+
+        private void Collide()
+        {
+            if (bounds.Intersects(Players.OldMan.Bounds))
+            {
+                Players.OldMan.Hit();
+            }
+
+            if (bounds.Intersects(Players.Dog.Bounds))
+            {
+                Players.Dog.Hit();
             }
         }
 
