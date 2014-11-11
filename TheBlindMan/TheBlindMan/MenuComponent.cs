@@ -37,8 +37,8 @@ namespace TheBlindMan
             set
             {
                 selectedIndex = value;
-                if (selectedIndex < 0)
-                    selectedIndex = 0;
+                if (selectedIndex < -1)
+                    selectedIndex = -1;
                 if (selectedIndex >= menuItems.Length)
                     selectedIndex = menuItems.Length - 1;
             }

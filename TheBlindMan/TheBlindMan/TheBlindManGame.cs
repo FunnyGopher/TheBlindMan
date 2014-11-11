@@ -102,6 +102,7 @@ namespace TheBlindMan
             Components.Add(creditScreen);
 
             activeScreen = StartScreen;
+            activeScreen.Start();
         }
         #endregion
 
@@ -144,8 +145,6 @@ namespace TheBlindMan
             base.Update(gameTime);
         }
         #endregion
-
-        
 
         #region Draw
         /// <summary>

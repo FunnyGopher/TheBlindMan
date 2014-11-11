@@ -22,10 +22,8 @@ namespace TheBlindMan
         public PlayScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
-            this.game = game;
-
-            Players.OldMan = new OldMan(PlayerIndex.One, 540, 900);
-            Players.Dog = new Dog(PlayerIndex.Two, 570, 920);
+            Players.OldMan = new OldMan(PlayerIndex.One);
+            Players.Dog = new Dog(PlayerIndex.Two);
 
             List<Point> spawnPoints = new List<Point>();
             spawnPoints.Add(new Point(-130, 280));
@@ -62,7 +60,8 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || GamePad.GetState(Players.OldMan.PlayerIndex).Buttons.Back == ButtonState.Pressed)
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) ||
+                GamePad.GetState(Players.OldMan.PlayerIndex).Buttons.Back == ButtonState.Pressed)
                 game.ActiveScreen = game.StartScreen;
 
             carManager.Update(gameTime);
@@ -73,9 +72,7 @@ namespace TheBlindMan
             Players.Dog.Update(gameTime);
 
             if (winZone.Intersects(Players.OldMan.Bounds))
-            {    
                 game.ActiveScreen = game.StartScreen;
-            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -93,21 +90,36 @@ namespace TheBlindMan
             Players.Dog.Draw(gameTime, spriteBatch);
         }
 
+        private void SpawnPlayers()
+        {
+            Players.OldMan.X = 540;
+            Players.OldMan.Y = 900;
+
+            Players.Dog.X = 570;
+            Players.Dog.Y = 920;
+        }
+
+        private void PlayBackgroundSound()
+        {
+            bgSoundInstance = bgSound.CreateInstance();
+            bgSoundInstance.Play();
+        }
+
         public override void Start()
         {
+            SpawnPlayers();
+            PlayBackgroundSound();
             base.Start();
-            bgSoundInstance = bgSound.CreateInstance();
-            bgSound.Play();
         }
 
         public override void Stop()
         {
-            base.Stop();
-            if(bgSoundInstance.State == SoundState.Playing)
+            if (bgSoundInstance.State == SoundState.Playing)
                 bgSoundInstance.Stop();
 
             bgSoundInstance.Dispose();
             carManager.Clear();
+            base.Stop();
         }
     }
 }

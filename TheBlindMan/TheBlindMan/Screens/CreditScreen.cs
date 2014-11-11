@@ -11,9 +11,8 @@ namespace TheBlindMan
 {
     public class CreditScreen : GameScreen
     {
-        KeyboardState keyboardState;
-        Texture2D image;
-        Rectangle imageRectangle;
+        private Texture2D image;
+        private Rectangle imageRectangle;
 
         public CreditScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
@@ -33,10 +32,9 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
 
-            keyboardState = Keyboard.GetState();
-
-            if (keyboardState.IsKeyDown(Keys.Escape))
-                game.Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) ||
+                GamePad.GetState(PlayerIndex.One).Buttons.B == ButtonState.Pressed)
+                game.ActiveScreen = game.StartScreen;
         }
 
         public override void Draw(GameTime gameTime)

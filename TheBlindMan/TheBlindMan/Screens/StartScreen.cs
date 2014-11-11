@@ -11,7 +11,6 @@ namespace TheBlindMan
 {
     public class StartScreen : GameScreen
     {
-        private TheBlindManGame game;
         private MenuComponent menuComponent;
         private string[] menuItems;
 
@@ -29,7 +28,6 @@ namespace TheBlindMan
         public StartScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
-            this.game = game;
             menuItems = new string[]{ "Start Game", "Controls", "Credits", "End Game" };
             imageRectangle = new Rectangle(
                 0, 0, Game.Window.ClientBounds.Width,
@@ -51,7 +49,8 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) ||
+                GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
                 hasPressedEnter = true;
 
             if (hasPressedEnter)
@@ -60,12 +59,15 @@ namespace TheBlindMan
                 {
                     case 0:
                         game.ActiveScreen = game.PlayScreen;
+                        hasPressedEnter = false;
                         break;
                     case 1:
                         game.ActiveScreen = game.InfoScreen;
+                        hasPressedEnter = false;
                         break;
                     case 2:
                         game.ActiveScreen = game.CreditScreen;
+                        hasPressedEnter = false;
                         break;
                     case 3:
                         game.Exit();
