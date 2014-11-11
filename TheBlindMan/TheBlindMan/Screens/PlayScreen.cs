@@ -12,7 +12,6 @@ namespace TheBlindMan
 {
     public class PlayScreen : GameScreen
     {
-        TheBlindManGame game;
         KeyboardState keyboardState;
         Texture2D image;
         CarManager carManager;
@@ -24,7 +23,7 @@ namespace TheBlindMan
             : base(game, spriteBatch)
         {
             this.game = game;
-            carManager = new CarManager();
+            carManager = new CarManager(game);
             Players.OldMan = new OldMan(PlayerIndex.One, 540, 900);
             Players.Dog = new Dog(PlayerIndex.Two, 570, 920);
             winZone = new Rectangle(460, 100, 60, 40);

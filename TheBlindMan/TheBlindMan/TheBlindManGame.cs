@@ -185,15 +185,13 @@ namespace TheBlindMan
             }
             else
             {
-                if (CheckKey(Keys.Enter) || CheckButton(Buttons.A))
+                if (CheckKey(Keys.Escape) || CheckButton(Buttons.Back))
                 {
                     activeScreen.Hide();
                     activeScreen = startScreen;
                     activeScreen.Show();
                 }
             }
-
-
         }
 
         private void HandlePlayScreen()
