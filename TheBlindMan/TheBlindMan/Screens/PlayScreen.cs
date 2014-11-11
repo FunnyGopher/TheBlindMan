@@ -12,20 +12,33 @@ namespace TheBlindMan
 {
     public class PlayScreen : GameScreen
     {
-        Texture2D image;
-        CarManager carManager;
-        SoundEffect bgSound;
-        SoundEffectInstance bgSoundInstance;
-        Rectangle winZone;
+        private Texture2D bgImage;
+        private SoundEffect bgSound;
+        private SoundEffectInstance bgSoundInstance;
+
+        private CarManager carManager;
+        private Rectangle winZone;
 
         public PlayScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
             this.game = game;
-            carManager = new CarManager(game);
 
             Players.OldMan = new OldMan(PlayerIndex.One, 540, 900);
             Players.Dog = new Dog(PlayerIndex.Two, 570, 920);
+
+            List<Point> spawnPoints = new List<Point>();
+            spawnPoints.Add(new Point(-130, 280));
+            spawnPoints.Add(new Point(-130, 355));
+            spawnPoints.Add(new Point(-130, 430));
+            spawnPoints.Add(new Point(-130, 490));
+            spawnPoints.Add(new Point(1210, 580));
+            spawnPoints.Add(new Point(1210, 680));
+            spawnPoints.Add(new Point(1210, 780));
+            spawnPoints.Add(new Point(1210, 855));
+
+            carManager = new CarManager(game);
+            carManager.AddSpawnPoints(spawnPoints);
 
             winZone = new Rectangle(460, 100, 60, 40);
         }
@@ -33,12 +46,15 @@ namespace TheBlindMan
         public override void LoadContent(ContentManager content)
         {
             Console.WriteLine("Loading Content For PlayScreen");
-            this.image = content.Load<Texture2D>(@"Images/Backgrounds/Level");
+
+            this.bgImage = content.Load<Texture2D>(@"Images/Backgrounds/Level");
             this.bgSound = content.Load<SoundEffect>(@"Audio/trafAmbi");
             this.bgSoundInstance = bgSound.CreateInstance();
-            carManager.LoadContent(content);
+
             Players.OldMan.LoadContent(content);
             Players.Dog.LoadContent(content);
+
+            carManager.LoadContent(content);
             base.LoadContent();
         }
 
@@ -49,12 +65,9 @@ namespace TheBlindMan
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || GamePad.GetState(Players.OldMan.PlayerIndex).Buttons.Back == ButtonState.Pressed)
                 game.ActiveScreen = game.StartScreen;
 
-            if (carManager.Count < 10)
-            {
-                carManager.AddCar();
-            }
-
             carManager.Update(gameTime);
+            if (carManager.Count < 10)
+                carManager.AddCar();
 
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);
@@ -67,7 +80,7 @@ namespace TheBlindMan
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Draw(image, new Vector2(0,0), Color.White);
+            spriteBatch.Draw(bgImage, new Vector2(0,0), Color.White);
             base.Draw(gameTime);
 
             DrawPlayers(gameTime, spriteBatch);
@@ -92,6 +105,7 @@ namespace TheBlindMan
             base.Stop();
             if(bgSoundInstance.State == SoundState.Playing)
                 bgSoundInstance.Stop();
+
             bgSoundInstance.Dispose();
             carManager.Clear();
         }

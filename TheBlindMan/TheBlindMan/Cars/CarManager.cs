@@ -14,7 +14,7 @@ namespace TheBlindMan
         private TheBlindManGame game;
         private List<Car> cars;
         private List<Car> carsToRemove;
-        private List<Point> spawnLocations;
+        private List<Point> spawnPoints;
         private Random random = new Random();
 
         private List<SoundEffect> soundEffects;
@@ -29,54 +29,31 @@ namespace TheBlindMan
             }
         }
 
-        public CarManager()
+        public CarManager(TheBlindManGame game)
         {
+            this.game = game;
+
             cars = new List<Car>();
             carsToRemove = new List<Car>();
-            spawnLocations = new List<Point>();
+            spawnPoints = new List<Point>();
             soundEffects = new List<SoundEffect>();
             premadeCars = new Car[1];
-
-            Point spawn1 = new Point(-130, 280);
-            Point spawn2 = new Point(-130, 355);
-            Point spawn3 = new Point(-130, 430);
-            Point spawn4 = new Point(-130, 490);
-            Point spawn5 = new Point(1210, 580);
-            Point spawn6 = new Point(1210, 680);
-            Point spawn7 = new Point(1210, 780);
-            Point spawn8 = new Point(1210, 855);
-
-            spawnLocations.Add(spawn1);
-            spawnLocations.Add(spawn2);
-            spawnLocations.Add(spawn3);
-            spawnLocations.Add(spawn4);
-            spawnLocations.Add(spawn5);
-            spawnLocations.Add(spawn6);
-            spawnLocations.Add(spawn7);
-            spawnLocations.Add(spawn8);
         }
 
         private Car GenerateCar()
         {
-            int premadeCarIndex = random.Next(0, premadeCars.Length);
-            int spawnIndex = random.Next(0, spawnLocations.Count);
-            int soundIndex = random.Next(0, soundEffects.Count);
+            Car car = new Car(premadeCars[random.Next(0, premadeCars.Length)]);
+
+            Point spawnPoint =  spawnPoints[random.Next(0, spawnPoints.Count)];
+            car.X = spawnPoint.X;
+            car.Y = spawnPoint.Y;
 
             float speed = (float)random.Next(10, 30);
-            if (spawnLocations[spawnIndex].X <= 0)
-            {
-                speed *= 1;
-            }
-            else
-            {
-                speed *= -1;
-            }
-
-            Car car = new Car(premadeCars[premadeCarIndex]);
-            car.X = (float)spawnLocations[spawnIndex].X;
-            car.Y = (float)spawnLocations[spawnIndex].Y;
+            speed *= spawnPoint.X <= 0 ? 1 : -1;
             car.Speed = speed;
-            car.SoundEffect = soundEffects[soundIndex];
+
+            SoundEffect soundEffect = soundEffects[random.Next(0, soundEffects.Count)];
+            car.SoundEffect = soundEffect;
 
             return car;
         }
@@ -96,24 +73,19 @@ namespace TheBlindMan
             foreach (Car car in cars)
             {
                 car.Update(gameTime);
-                if (car.X + car.Bounds.Width < game.Window.ClientBounds.Left - car.Bounds.Width || car.X > game.Window.ClientBounds.Right + car.Bounds.Width)
-                {
+                if (car.X + car.Bounds.Width < 0 - car.Bounds.Width || car.X > game.GraphicsDevice.Viewport.Width + car.Bounds.Width)
                     carsToRemove.Add(car);
-                }
             }
+
             foreach (Car car in carsToRemove)
-            {
                 cars.Remove(car);
-            }
             carsToRemove.Clear();
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach (Car car in cars)
-            {
                 car.Draw(gameTime, spriteBatch);
-            }
         }
 
         public void AddCar(int numberOfCars = 1)
@@ -122,9 +94,23 @@ namespace TheBlindMan
                 return;
 
             for (int index = 0; index < numberOfCars; index++)
-            {
                 cars.Add(GenerateCar());
-            }
+        }
+
+        public void AddSpawnPoint(Point spawnPoint)
+        {
+            spawnPoints.Add(spawnPoint);
+        }
+
+        public void AddSpawnPoints(List<Point> spawnPoints)
+        {
+            foreach (Point point in spawnPoints)
+                this.spawnPoints.Add(point);
+        }
+
+        public void Clear()
+        {
+            cars.Clear();
         }
     }
 }
