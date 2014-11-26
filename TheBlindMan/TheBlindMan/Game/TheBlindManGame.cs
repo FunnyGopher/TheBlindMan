@@ -33,6 +33,8 @@ namespace TheBlindMan
         CreditScreen creditScreen;
         PlayScreen playScreen;
 
+        Vector3 screenScale = GetScreenScale();
+
         public GameScreen ActiveScreen
         {
             get { return activeScreen; }
@@ -73,6 +75,8 @@ namespace TheBlindMan
             Content.RootDirectory = "Content";
             Console.WriteLine("Loading Content from the game");
         }
+
+        public Vector3 
 
         #region Initialize
         /// <summary>
