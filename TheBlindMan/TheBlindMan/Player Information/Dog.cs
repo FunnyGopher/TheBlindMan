@@ -108,6 +108,7 @@ namespace TheBlindMan
         public override void Move(GameTime gameTime)
         {
             GamePadDPad dPad = GamePadState.DPad;
+            KeyboardState keyboard = Keyboard.GetState();
             moveVector = GamePadState.ThumbSticks.Left;
             velocity.X = 0;
             velocity.Y = 0;
@@ -144,6 +145,39 @@ namespace TheBlindMan
                 velocity.X = Speed;
                 CurrentAnimationName = "walkingRight";
                 Direction = "Right";
+                Bounds = new Rectangle((int)X, (int)Y + (int)(8 + Scale), (int)(24 + Scale), (int)(8 * Scale));
+            }
+
+            //Arrow Keys
+            if (keyboard.IsKeyDown(Keys.Up))
+            {
+                velocity.Y = -Speed;
+                CurrentAnimationName = "walkingBack";
+                Direction = "Back";
+                Bounds = new Rectangle((int)X, (int)Y + (int)(8 + Scale), (int)(10 + Scale), (int)(8 * Scale));
+            }
+
+            if (keyboard.IsKeyDown(Keys.Down))
+            {
+                velocity.Y = Speed;
+                CurrentAnimationName = "walkingFront";
+                Direction = "Front";
+                Bounds = new Rectangle((int)X, (int)Y + (int)(8 + Scale), (int)(10 + Scale), (int)(8 * Scale));
+            }
+
+            if (keyboard.IsKeyDown(Keys.Right))
+            {
+                velocity.X = Speed;
+                CurrentAnimationName = "walkingRight";
+                Direction = "Right";
+                Bounds = new Rectangle((int)X, (int)Y + (int)(8 + Scale), (int)(24 + Scale), (int)(8 * Scale));
+            }
+
+            if (keyboard.IsKeyDown(Keys.Left))
+            {
+                velocity.X = -Speed;
+                CurrentAnimationName = "walkingLeft";
+                Direction = "Left";
                 Bounds = new Rectangle((int)X, (int)Y + (int)(8 + Scale), (int)(24 + Scale), (int)(8 * Scale));
             }
 

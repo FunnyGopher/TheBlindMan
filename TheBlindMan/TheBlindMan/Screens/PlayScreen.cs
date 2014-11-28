@@ -95,8 +95,8 @@ namespace TheBlindMan
             Players.OldMan.X = 540;
             Players.OldMan.Y = 900;
 
-            Players.Dog.X = 570;
-            Players.Dog.Y = 920;
+            Players.Dog.X = 50;//570;
+            Players.Dog.Y = 50;//920;
         }
 
         private void PlayBackgroundSound()

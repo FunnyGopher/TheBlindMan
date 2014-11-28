@@ -112,6 +112,7 @@ namespace TheBlindMan
         public override void Move(GameTime gameTime)
         {
             GamePadDPad dPad = GamePadState.DPad;
+            KeyboardState keyState = Keyboard.GetState();
             moveVector = GamePadState.ThumbSticks.Left;
 
             velocity.X = 0;
@@ -146,6 +147,35 @@ namespace TheBlindMan
                 velocity.X = Speed;
                 CurrentAnimationName = "walkingRight";
                 Direction = "Right";
+            }
+
+            //WASD
+            if (keyState.IsKeyDown(Keys.W))
+            {
+                velocity.Y = -Speed;
+                CurrentAnimationName = "walkingBack";
+                Direction = "Back";
+            }
+
+            if (keyState.IsKeyDown(Keys.S))
+            {
+                velocity.Y = Speed;
+                CurrentAnimationName = "walkingFront";
+                Direction = "Front";
+            }
+
+            if (keyState.IsKeyDown(Keys.D))
+            {
+                velocity.X = Speed;
+                CurrentAnimationName = "walkingRight";
+                Direction = "Right";
+            }
+
+            if (keyState.IsKeyDown(Keys.A))
+            {
+                velocity.X = -Speed;
+                CurrentAnimationName = "walkingLeft";
+                Direction = "Left";
             }
 
             // Left Thumbstick

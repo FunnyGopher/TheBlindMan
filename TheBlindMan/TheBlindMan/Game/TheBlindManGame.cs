@@ -33,7 +33,7 @@ namespace TheBlindMan
         CreditScreen creditScreen;
         PlayScreen playScreen;
 
-        Vector3 screenScale = GetScreenScale();
+        Vector3 screenScale = new Vector3(1f, 1f, 1f);
 
         public GameScreen ActiveScreen
         {
@@ -76,8 +76,6 @@ namespace TheBlindMan
             Console.WriteLine("Loading Content from the game");
         }
 
-        public Vector3 
-
         #region Initialize
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -88,7 +86,7 @@ namespace TheBlindMan
         protected override void Initialize()
         {
             base.Initialize();
-
+            Console.WriteLine("HEy");
             startScreen = new StartScreen(this, spriteBatch);
             startScreen.LoadContent(Content);
             Components.Add(startScreen);
@@ -141,7 +139,6 @@ namespace TheBlindMan
         protected override void Update(GameTime gameTime)
         {
             activeScreen.Update(gameTime);
-
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
