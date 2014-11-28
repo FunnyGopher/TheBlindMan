@@ -33,8 +33,12 @@ namespace TheBlindMan
         CreditScreen creditScreen;
         PlayScreen playScreen;
 
-        Vector3 screenScale = new Vector3(1f, 1f, 1f);
+        Camera camera = new Camera();
+        Vector2 camPos = new Vector2(0,0);
+        Vector2 camSpeed = new Vector2(0,1);
+        Vector3 screenScale = new Vector3(1080f, 720f, 1f);
 
+        #region Getter(s) Setter(s)
         public GameScreen ActiveScreen
         {
             get { return activeScreen; }
@@ -65,12 +69,13 @@ namespace TheBlindMan
         {
             get { return creditScreen; }
         }
+        #endregion
 
         public TheBlindManGame()
         {
             graphics = new GraphicsDeviceManager(this);
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 16);
-            graphics.PreferredBackBufferHeight = 1000;
+            graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1080;
             Content.RootDirectory = "Content";
             Console.WriteLine("Loading Content from the game");
@@ -142,7 +147,20 @@ namespace TheBlindMan
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-
+            if (camPos.Y > 720)
+            {
+                camPos.Y = 720;
+                camSpeed.Y = -1;
+            }
+            if (camPos.Y < 0)
+            {
+                camPos.Y = 0;
+                camSpeed.Y = 1;
+            }
+            camPos.Y += camSpeed.Y;
+            camera.Update(camPos);
+            Console.WriteLine(camPos.Y);
+            Console.WriteLine(camSpeed.Y);
             base.Update(gameTime);
         }
         #endregion
@@ -156,7 +174,8 @@ namespace TheBlindMan
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, 
+                null, null, null, null, camera.ViewMatrix);
             base.Draw(gameTime);
             activeScreen.Draw(gameTime);
             spriteBatch.End();

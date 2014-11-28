@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
-    <Compile Include="Camera\Camera2D.cs" />
+    <Compile Include="Camera\Camera.cs" />
     <Compile Include="Cars\Car.cs" />
     <Compile Include="Cars\CarManager.cs" />
     <Compile Include="Screens\CreditScreen.cs" />
