@@ -89,6 +89,7 @@
     <Compile Include="Camera\Camera.cs" />
     <Compile Include="Cars\Car.cs" />
     <Compile Include="Cars\CarManager.cs" />
+    <Compile Include="Cars\Lane.cs" />
     <Compile Include="Screens\CreditScreen.cs" />
     <Compile Include="Player Information\Dog.cs" />
     <Compile Include="Game\TheBlindManGame.cs" />

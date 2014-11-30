@@ -12,24 +12,15 @@ namespace TheBlindMan
     class CarManager
     {
         private TheBlindManGame game;
-        private List<Car> cars;
-        private List<Car> carsToRemove;
-        private List<Point> spawnPoints;
+        private List<Lane> lane;
+        //private List<Car> carsToRemove;
+        //private List<Point> spawnPoints;
         private Random random = new Random();
         private const int TOTAL_NUMBER_OF_CARS = 10;
         private const int TOTAL_TYPES_OF_CARS = 1;
-
         private List<SoundEffect> soundEffects;
-
         private Car[] preFabCars;
-
-        public int Count
-        {
-            get
-            {
-                return cars.Count;
-            }
-        }
+        //public int Count {get{return cars.Count;}}
 
         public CarManager(TheBlindManGame game)
         {
@@ -42,6 +33,7 @@ namespace TheBlindMan
             preFabCars = new Car[TOTAL_TYPES_OF_CARS];     
         }
 
+        /*
         private Car GenerateCar()
         {
             Car car = new Car(preFabCars[random.Next(0, preFabCars.Length)]);
@@ -71,6 +63,7 @@ namespace TheBlindMan
             }
             return new Point(1, 1);
         }
+        */
 
         public virtual void LoadContent(ContentManager content)
         {
@@ -84,6 +77,7 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
+            /*
             if (cars.Count < TOTAL_NUMBER_OF_CARS)
                 AddCar();
 
@@ -98,12 +92,13 @@ namespace TheBlindMan
                 cars.Remove(car);
 
             carsToRemove.Clear();
+             */
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (Car car in cars)
-                car.Draw(gameTime, spriteBatch);
+            foreach (Lane lane in lanes)
+                lane.Draw(gameTime, spriteBatch);
         }
 
         public void AddCar()
