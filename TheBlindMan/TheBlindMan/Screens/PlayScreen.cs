@@ -26,6 +26,15 @@ namespace TheBlindMan
             Players.Dog = new Dog(PlayerIndex.Two);
             carManager = new CarManager(game);
             winZone = new Rectangle(460, 100, 60, 40);
+
+            carManager.AddSpawnPoint(new Point(-130, 486));
+            carManager.AddSpawnPoint(new Point(1210, 199));
+            carManager.AddSpawnPoint(new Point(-130, 554));
+            carManager.AddSpawnPoint(new Point(1210, 272));
+            carManager.AddSpawnPoint(new Point(-130, 624));
+            carManager.AddSpawnPoint(new Point(1210, 339));
+            carManager.AddSpawnPoint(new Point(-130, 691));
+            carManager.AddSpawnPoint(new Point(1210, 408));
         }
 
         public override void LoadContent(ContentManager content)

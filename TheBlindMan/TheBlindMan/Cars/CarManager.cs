@@ -17,10 +17,11 @@ namespace TheBlindMan
         private List<Point> spawnPoints;
         private Random random = new Random();
         private const int TOTAL_NUMBER_OF_CARS = 10;
+        private const int TOTAL_TYPES_OF_CARS = 1;
 
         private List<SoundEffect> soundEffects;
 
-        private Car[] premadeCars;
+        private Car[] preFabCars;
 
         public int Count
         {
@@ -38,21 +39,12 @@ namespace TheBlindMan
             carsToRemove = new List<Car>();
             spawnPoints = new List<Point>();
             soundEffects = new List<SoundEffect>();
-            premadeCars = new Car[1];
-            
-            AddSpawnPoint(new Point(-130, 486));
-            AddSpawnPoint(new Point(1210, 199));
-            AddSpawnPoint(new Point(-130, 554));       
-            AddSpawnPoint(new Point(1210, 272));
-            AddSpawnPoint(new Point(-130, 624));
-            AddSpawnPoint(new Point(1210, 339));
-            AddSpawnPoint(new Point(-130, 691));
-            AddSpawnPoint(new Point(1210, 408));          
+            preFabCars = new Car[TOTAL_TYPES_OF_CARS];     
         }
 
         private Car GenerateCar()
         {
-            Car car = new Car(premadeCars[random.Next(0, premadeCars.Length)]);
+            Car car = new Car(preFabCars[random.Next(0, preFabCars.Length)]);
 
             Point spawnPoint = spawnPoints[random.Next(0, 8)]; 
             car.X = spawnPoint.X;
@@ -85,7 +77,7 @@ namespace TheBlindMan
             Animation carAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/car_sheet"),
                new Point(128, 40), new Point(0, 0), new Point(2, 1), 2000);
             Car car = new Car(carAnim, 20);
-            premadeCars[0] = car;
+            preFabCars[0] = car;
 
             soundEffects.Add(content.Load<SoundEffect>(@"Audio/carSound1"));
         }
