@@ -16,6 +16,7 @@ namespace TheBlindMan
         private List<Car> carsToRemove;
         private List<Point> spawnPoints;
         private Random random = new Random();
+        private const int TOTAL_NUMBER_OF_CARS = 10;
 
         private List<SoundEffect> soundEffects;
 
@@ -38,6 +39,15 @@ namespace TheBlindMan
             spawnPoints = new List<Point>();
             soundEffects = new List<SoundEffect>();
             premadeCars = new Car[1];
+
+            AddSpawnPoint(new Point(-130, 280));
+            AddSpawnPoint(new Point(-130, 355));
+            AddSpawnPoint(new Point(-130, 430));
+            AddSpawnPoint(new Point(-130, 490));
+            AddSpawnPoint(new Point(1210, 580));
+            AddSpawnPoint(new Point(1210, 680));
+            AddSpawnPoint(new Point(1210, 780));
+            AddSpawnPoint(new Point(1210, 855));
         }
 
         private Car GenerateCar()
@@ -47,7 +57,7 @@ namespace TheBlindMan
             Point spawnPoint =  spawnPoints[random.Next(0, spawnPoints.Count)];
             car.X = spawnPoint.X;
             car.Y = spawnPoint.Y;
-            float speed = (float)random.Next(10, 30); //10,30;
+            float speed = (float)random.Next(10, 30);
             speed *= spawnPoint.X <= 0 ? 1 : -1;
             car.Speed = speed;
 
@@ -60,7 +70,7 @@ namespace TheBlindMan
         public virtual void LoadContent(ContentManager content)
         {
             Animation carAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/car_sheet"),
-               new Point(128, 40), new Point(0, 0), new Point(2, 1), 600);
+               new Point(128, 40), new Point(0, 0), new Point(2, 1), 2000);
             Car car = new Car(carAnim, 20);
             premadeCars[0] = car;
 
@@ -69,6 +79,9 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
+            if (cars.Count < TOTAL_NUMBER_OF_CARS)
+                AddCar();
+
             foreach (Car car in cars)
             {
                 car.Update(gameTime);
@@ -78,6 +91,7 @@ namespace TheBlindMan
 
             foreach (Car car in carsToRemove)
                 cars.Remove(car);
+
             carsToRemove.Clear();
         }
 
@@ -87,13 +101,9 @@ namespace TheBlindMan
                 car.Draw(gameTime, spriteBatch);
         }
 
-        public void AddCar(int numberOfCars = 1)
+        public void AddCar()
         {
-            if (numberOfCars <= 0)
-                return;
-
-            for (int index = 0; index < numberOfCars; index++)
-                cars.Add(GenerateCar());
+            cars.Add(GenerateCar());
         }
 
         public void AddSpawnPoint(Point spawnPoint)

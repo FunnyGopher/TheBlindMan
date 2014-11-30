@@ -128,7 +128,7 @@ namespace TheBlindMan
                     currentAnimation.GetCurrentFrameRectangle(), Color.White);*/
                 spriteBatch.Draw(currentAnimation.TextureImage, new Vector2(x, y),
                 currentAnimation.GetCurrentFrameRectangle(), Color.White, 0, new Vector2(0, 0),
-                scale, SpriteEffects.None, 0);
+                scale, SpriteEffects.None, .6f);
             }
         }
 

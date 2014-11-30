@@ -24,20 +24,7 @@ namespace TheBlindMan
         {
             Players.OldMan = new OldMan(PlayerIndex.One);
             Players.Dog = new Dog(PlayerIndex.Two);
-
-            List<Point> spawnPoints = new List<Point>();
-            spawnPoints.Add(new Point(-130, 280));
-            spawnPoints.Add(new Point(-130, 355));
-            spawnPoints.Add(new Point(-130, 430));
-            spawnPoints.Add(new Point(-130, 490));
-            spawnPoints.Add(new Point(1210, 580));
-            spawnPoints.Add(new Point(1210, 680));
-            spawnPoints.Add(new Point(1210, 780));
-            spawnPoints.Add(new Point(1210, 855));
-
             carManager = new CarManager(game);
-            carManager.AddSpawnPoints(spawnPoints);
-
             winZone = new Rectangle(460, 100, 60, 40);
         }
 
@@ -63,8 +50,6 @@ namespace TheBlindMan
                 game.ActiveScreen = game.StartScreen;
 
             carManager.Update(gameTime);
-            if (carManager.Count < 10)
-                carManager.AddCar();
 
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);
@@ -75,7 +60,7 @@ namespace TheBlindMan
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Draw(bgImage, new Vector2(0,0), Color.White);
+            spriteBatch.Draw(bgImage, Vector2.Zero, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1); 
             base.Draw(gameTime);
 
             DrawPlayers(gameTime, spriteBatch);
@@ -91,10 +76,10 @@ namespace TheBlindMan
         private void SpawnPlayers()
         {
             Players.OldMan.X = 540;
-            Players.OldMan.Y = 1400;
+            Players.OldMan.Y = 1350;
 
-            Players.Dog.X = 500;//570;
-            Players.Dog.Y = 1400;//920;
+            Players.Dog.X = 510;
+            Players.Dog.Y = 1380;
         }
 
         private void PlayBackgroundSound()

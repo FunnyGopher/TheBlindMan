@@ -41,7 +41,7 @@ namespace TheBlindMan
             : base(index, x, y)
         {
             Speed = 10;
-            Scale = 2;
+            Scale = 1;
             feelVector = new Vector2();
             moveVector = new Vector2();
             velocity = new Vector2(0, 0);
@@ -56,36 +56,36 @@ namespace TheBlindMan
         {
             // Walking animations
             Animation walkingFront = new Animation(content.Load<Texture2D>(@"Images/OldMan/front_sheet"),
-               new Point(14, 32), new Point(0, 0), new Point(2, 1), 200);
+               new Point(28, 54), new Point(0, 0), new Point(8, 1), 125);
             Players.OldMan.AddAnimation("walkingFront", walkingFront);
 
             Animation walkingLeft = new Animation(content.Load<Texture2D>(@"Images/OldMan/left_sheet"),
-               new Point(11, 32), new Point(0, 0), new Point(2, 1), 200);
+               new Point(21, 54), new Point(0, 0), new Point(6, 1), 200);
             Players.OldMan.AddAnimation("walkingLeft", walkingLeft);
 
             Animation walkingRight = new Animation(content.Load<Texture2D>(@"Images/OldMan/right_sheet"),
-               new Point(11, 32), new Point(0, 0), new Point(2, 1), 200);
+               new Point(21, 54), new Point(0, 0), new Point(6, 1), 200);
             Players.OldMan.AddAnimation("walkingRight", walkingRight);
 
             Animation walkingBack = new Animation(content.Load<Texture2D>(@"Images/OldMan/back_sheet"),
-               new Point(14, 32), new Point(0, 0), new Point(2, 1), 200);
+               new Point(28, 54), new Point(0, 0), new Point(8, 1), 125);
             Players.OldMan.AddAnimation("walkingBack", walkingBack);
 
             // Standing animations
             Animation standingFront = new Animation(content.Load<Texture2D>(@"Images/OldMan/front"),
-               new Point(14, 32), new Point(0, 0), new Point(1, 1), 200);
+               new Point(28, 54), new Point(0, 0), new Point(1, 1), 200);
             Players.OldMan.AddAnimation("standingFront", standingFront);
 
             Animation standingLeft = new Animation(content.Load<Texture2D>(@"Images/OldMan/left"),
-               new Point(11, 32), new Point(0, 0), new Point(1, 1), 200);
+               new Point(21, 54), new Point(0, 0), new Point(1, 1), 200);
             Players.OldMan.AddAnimation("standingLeft", standingLeft);
 
             Animation standingRight = new Animation(content.Load<Texture2D>(@"Images/OldMan/right"),
-               new Point(11, 32), new Point(0, 0), new Point(1, 1), 200);
+               new Point(21, 54), new Point(0, 0), new Point(1, 1), 200);
             Players.OldMan.AddAnimation("standingRight", standingRight);
 
             Animation standingBack = new Animation(content.Load<Texture2D>(@"Images/OldMan/back"),
-               new Point(14, 32), new Point(0, 0), new Point(1, 1), 200);
+               new Point(28, 54), new Point(0, 0), new Point(1, 1), 200);
             Players.OldMan.AddAnimation("standingBack", standingBack);
 
             Players.OldMan.CurrentAnimationName = "standingBack";

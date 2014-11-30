@@ -35,7 +35,7 @@ namespace TheBlindMan
             : base(index, x, y)
         {
             Speed = 20;
-            Scale = 2;
+            Scale = 1.5f;
             moveVector = new Vector2();
             velocity = new Vector2(0, 0);
 
@@ -51,36 +51,36 @@ namespace TheBlindMan
         {
             // Walking animations
             Animation walkingFront = new Animation(content.Load<Texture2D>(@"Images/Dog/front_sheet"),
-               new Point(10, 16), new Point(0, 0), new Point(4, 1), 200);
+               new Point(16, 26), new Point(0, 0), new Point(4, 1), 200);
             Players.Dog.AddAnimation("walkingFront", walkingFront);
 
             Animation walkingLeft = new Animation(content.Load<Texture2D>(@"Images/Dog/left_sheet"),
-               new Point(24, 16), new Point(0, 0), new Point(2, 1), 200);
+               new Point(36, 26), new Point(0, 0), new Point(8, 1), 200);
             Players.Dog.AddAnimation("walkingLeft", walkingLeft);
 
             Animation walkingRight = new Animation(content.Load<Texture2D>(@"Images/Dog/right_sheet"),
-               new Point(24, 16), new Point(0, 0), new Point(2, 1), 200);
+               new Point(36, 26), new Point(0, 0), new Point(8, 1), 200);
             Players.Dog.AddAnimation("walkingRight", walkingRight);
 
             Animation walkingBack = new Animation(content.Load<Texture2D>(@"Images/Dog/back_sheet"),
-               new Point(10, 16), new Point(0, 0), new Point(3, 1), 200);
+               new Point(16, 26), new Point(0, 0), new Point(4, 1), 200);
             Players.Dog.AddAnimation("walkingBack", walkingBack);
 
             // Standing animations
             Animation standingFront = new Animation(content.Load<Texture2D>(@"Images/Dog/front"),
-               new Point(10, 16), new Point(0, 0), new Point(1, 1), 200);
+               new Point(16, 26), new Point(0, 0), new Point(1, 1), 200);
             Players.Dog.AddAnimation("standingFront", standingFront);
 
             Animation standingLeft = new Animation(content.Load<Texture2D>(@"Images/Dog/left"),
-               new Point(24, 16), new Point(0, 0), new Point(1, 1), 200);
+               new Point(36, 26), new Point(0, 0), new Point(1, 1), 200);
             Players.Dog.AddAnimation("standingLeft", standingLeft);
 
             Animation standingRight = new Animation(content.Load<Texture2D>(@"Images/Dog/right"),
-               new Point(24, 16), new Point(0, 0), new Point(1, 1), 200);
+               new Point(36, 26), new Point(0, 0), new Point(1, 1), 200);
             Players.Dog.AddAnimation("standingRight", standingRight);
 
             Animation standingBack = new Animation(content.Load<Texture2D>(@"Images/Dog/back"),
-               new Point(10, 16), new Point(0, 0), new Point(1, 1), 200);
+               new Point(16, 26), new Point(0, 0), new Point(1, 1), 200);
             Players.Dog.AddAnimation("standingBack", standingBack);
 
             Players.Dog.CurrentAnimationName = "standingBack";
