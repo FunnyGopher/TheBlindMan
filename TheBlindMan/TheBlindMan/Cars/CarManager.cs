@@ -33,10 +33,9 @@ namespace TheBlindMan
             preFabCars = new Car[TOTAL_TYPES_OF_CARS];     
         }
 
-        /*
-        private Car GenerateCar()
+        public Car GenerateCar()
         {
-            Car car = new Car(preFabCars[random.Next(0, preFabCars.Length)]);
+            Car car = new Car(preFabCars[random.Next(0, TOTAL_TYPES_OF_CARS)]);
 
             Point spawnPoint = spawnPoints[random.Next(0, 8)]; 
             car.X = spawnPoint.X;

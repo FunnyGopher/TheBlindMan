@@ -125,12 +125,46 @@ namespace TheBlindMan
         {
             if (bounds.Intersects(Players.OldMan.Bounds))
             {
-                Players.OldMan.Hit();
+                if(speed > 0)
+                {
+                    Players.OldMan.Hit();
+                }
+                else
+                {
+                    Rectangle overlap = Rectangle.Intersect(bounds, Players.OldMan.Bounds);
+                    if (overlap.Width > overlap.Height)
+                        Players.OldMan.X += -Players.OldMan.Speed;
+                    else if(overlap.Height > overlap.Width)
+                        Players.OldMan.Y += -Players.OldMan.Speed;
+                    else if(overlap.Height == overlap.Width)
+                    {
+                        Players.OldMan.X += -Players.OldMan.Speed;
+                        Players.OldMan.Y += -Players.OldMan.Speed;
+                    }
+                }
+                
             }
 
             if (bounds.Intersects(Players.Dog.Bounds))
             {
-                Players.Dog.Hit();
+                if (speed > 0)
+                {
+                    Players.Dog.Hit();
+                }
+                else
+                {
+                    Rectangle overlap = Rectangle.Intersect(bounds, Players.Dog.Bounds);
+                    if (overlap.Width > overlap.Height)
+                        Players.Dog.X += -Players.Dog.Speed;
+                    else if (overlap.Height > overlap.Width)
+                        Players.Dog.Y += -Players.Dog.Speed;
+                    else if (overlap.Height == overlap.Width)
+                    {
+                        Players.Dog.X += -Players.Dog.Speed;
+                        Players.Dog.Y += -Players.Dog.Speed;
+                    }
+                }
+
             }
         }
 

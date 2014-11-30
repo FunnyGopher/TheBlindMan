@@ -18,23 +18,37 @@ namespace TheBlindMan
 
         private CarManager carManager;
         private Rectangle winZone;
+        private Car[] parkedCars;
 
         public PlayScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
             Players.OldMan = new OldMan(PlayerIndex.One);
             Players.Dog = new Dog(PlayerIndex.Two);
-            carManager = new CarManager(game);
-            winZone = new Rectangle(460, 100, 60, 40);
 
-            carManager.AddSpawnPoint(new Point(-130, 486));
-            carManager.AddSpawnPoint(new Point(1210, 199));
-            carManager.AddSpawnPoint(new Point(-130, 554));
-            carManager.AddSpawnPoint(new Point(1210, 272));
-            carManager.AddSpawnPoint(new Point(-130, 624));
-            carManager.AddSpawnPoint(new Point(1210, 339));
-            carManager.AddSpawnPoint(new Point(-130, 691));
-            carManager.AddSpawnPoint(new Point(1210, 408));
+            winZone = new Rectangle(460, 100, 60, 40);
+            carManager = new CarManager(game);
+            parkedCars = new Car[1];
+        }
+
+        public void Initialize()
+        {
+            List<Point> carSpawnPoints = new List<Point>();
+            carSpawnPoints.Add(new Point(-130, 486));
+            carSpawnPoints.Add(new Point(1210, 199));
+            carSpawnPoints.Add(new Point(-130, 554));
+            carSpawnPoints.Add(new Point(1210, 272));
+            carSpawnPoints.Add(new Point(-130, 624));
+            carSpawnPoints.Add(new Point(1210, 339));
+            carSpawnPoints.Add(new Point(-130, 691));
+            carSpawnPoints.Add(new Point(1210, 408));
+            carManager.AddSpawnPoints(carSpawnPoints);
+
+            Car parkedCar = carManager.GenerateCar();
+            parkedCar.X = 300;
+            parkedCar.Y = 800;
+            parkedCar.Speed = 0;
+            parkedCars[0] = parkedCar;
         }
 
         public override void LoadContent(ContentManager content)
@@ -60,6 +74,9 @@ namespace TheBlindMan
 
             carManager.Update(gameTime);
 
+            foreach (Car car in parkedCars)
+                car.Update(gameTime);
+
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);
 
@@ -74,6 +91,8 @@ namespace TheBlindMan
 
             DrawPlayers(gameTime, spriteBatch);
             carManager.Draw(gameTime, spriteBatch);
+            foreach (Car car in parkedCars)
+                car.Draw(gameTime, spriteBatch);
         }
 
         private void DrawPlayers(GameTime gameTime, SpriteBatch spriteBatch)
