@@ -54,7 +54,7 @@ namespace TheBlindMan
         {
             Car car = new Car(premadeCars[random.Next(0, premadeCars.Length)]);
 
-            Point spawnPoint = getGoodSpawnPoint();  
+            Point spawnPoint = spawnPoints[random.Next(0, 8)]; 
             car.X = spawnPoint.X;
             car.Y = spawnPoint.Y;
             float speed = (float)random.Next(10, 30);
