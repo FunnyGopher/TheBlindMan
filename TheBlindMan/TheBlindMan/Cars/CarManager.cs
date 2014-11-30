@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Audio;
 
 namespace TheBlindMan
 {
@@ -39,22 +39,22 @@ namespace TheBlindMan
             spawnPoints = new List<Point>();
             soundEffects = new List<SoundEffect>();
             premadeCars = new Car[1];
-
-            AddSpawnPoint(new Point(-130, 280));
-            AddSpawnPoint(new Point(-130, 355));
-            AddSpawnPoint(new Point(-130, 430));
-            AddSpawnPoint(new Point(-130, 490));
-            AddSpawnPoint(new Point(1210, 580));
-            AddSpawnPoint(new Point(1210, 680));
-            AddSpawnPoint(new Point(1210, 780));
-            AddSpawnPoint(new Point(1210, 855));
+            
+            AddSpawnPoint(new Point(-130, 486));
+            AddSpawnPoint(new Point(1210, 199));
+            AddSpawnPoint(new Point(-130, 554));       
+            AddSpawnPoint(new Point(1210, 272));
+            AddSpawnPoint(new Point(-130, 624));
+            AddSpawnPoint(new Point(1210, 339));
+            AddSpawnPoint(new Point(-130, 691));
+            AddSpawnPoint(new Point(1210, 408));          
         }
 
         private Car GenerateCar()
         {
             Car car = new Car(premadeCars[random.Next(0, premadeCars.Length)]);
 
-            Point spawnPoint =  spawnPoints[random.Next(0, spawnPoints.Count)];
+            Point spawnPoint = getGoodSpawnPoint();  
             car.X = spawnPoint.X;
             car.Y = spawnPoint.Y;
             float speed = (float)random.Next(10, 30);
@@ -65,6 +65,19 @@ namespace TheBlindMan
             car.SoundEffect = soundEffect;
 
             return car;
+        }
+
+        private Point getGoodSpawnPoint()
+        {
+            bool goodSpawnFound = false;
+            while (!(goodSpawnFound))
+            {
+                Point SpawnPoint = spawnPoints[random.Next(0, 8)];
+                foreach (Car car in cars)
+                {
+                }
+            }
+            return new Point(1, 1);
         }
 
         public virtual void LoadContent(ContentManager content)

@@ -35,7 +35,7 @@ namespace TheBlindMan
             : base(index, x, y)
         {
             Speed = 20;
-            Scale = 1.5f;
+            Scale = 1.1f;
             moveVector = new Vector2();
             velocity = new Vector2(0, 0);
 

@@ -40,7 +40,7 @@ namespace TheBlindMan
         public OldMan(PlayerIndex index, float x, float y)
             : base(index, x, y)
         {
-            Speed = 10;
+            Speed = 40;
             Scale = 1;
             feelVector = new Vector2();
             moveVector = new Vector2();
