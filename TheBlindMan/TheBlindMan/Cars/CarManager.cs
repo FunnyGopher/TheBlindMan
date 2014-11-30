@@ -47,8 +47,7 @@ namespace TheBlindMan
             Point spawnPoint =  spawnPoints[random.Next(0, spawnPoints.Count)];
             car.X = spawnPoint.X;
             car.Y = spawnPoint.Y;
-            Console.WriteLine("Hey");
-            float speed = (float)random.Next(1, 2); //10,30;
+            float speed = (float)random.Next(10, 30); //10,30;
             speed *= spawnPoint.X <= 0 ? 1 : -1;
             car.Speed = speed;
 

@@ -43,8 +43,6 @@ namespace TheBlindMan
 
         public override void LoadContent(ContentManager content)
         {
-            Console.WriteLine("Loading Content For PlayScreen");
-
             this.bgImage = content.Load<Texture2D>(@"Images/Backgrounds/Level");
             this.bgSound = content.Load<SoundEffect>(@"Audio/trafAmbi");
             this.bgSoundInstance = bgSound.CreateInstance();
@@ -93,10 +91,10 @@ namespace TheBlindMan
         private void SpawnPlayers()
         {
             Players.OldMan.X = 540;
-            Players.OldMan.Y = 900;
+            Players.OldMan.Y = 1400;
 
-            Players.Dog.X = 50;//570;
-            Players.Dog.Y = 50;//920;
+            Players.Dog.X = 500;//570;
+            Players.Dog.Y = 1400;//920;
         }
 
         private void PlayBackgroundSound()

@@ -78,7 +78,6 @@ namespace TheBlindMan
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1080;
             Content.RootDirectory = "Content";
-            Console.WriteLine("Loading Content from the game");
         }
 
         #region Initialize
@@ -91,7 +90,6 @@ namespace TheBlindMan
         protected override void Initialize()
         {
             base.Initialize();
-            Console.WriteLine("HEy");
             startScreen = new StartScreen(this, spriteBatch);
             startScreen.LoadContent(Content);
             Components.Add(startScreen);
@@ -147,20 +145,16 @@ namespace TheBlindMan
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            if (camPos.Y > 720)
-            {
+
+            int playerCenter = Players.OldMan.Bounds.Center.Y;
+            if (playerCenter >= 1080)
                 camPos.Y = 720;
-                camSpeed.Y = -1;
-            }
-            if (camPos.Y < 0)
-            {
+            else if (playerCenter < 1080 && playerCenter > 360)
+                camPos.Y = playerCenter - 360;
+            else if (playerCenter <= 360)
                 camPos.Y = 0;
-                camSpeed.Y = 1;
-            }
             camPos.Y += camSpeed.Y;
             camera.Update(camPos);
-            Console.WriteLine(camPos.Y);
-            Console.WriteLine(camSpeed.Y);
             base.Update(gameTime);
         }
         #endregion

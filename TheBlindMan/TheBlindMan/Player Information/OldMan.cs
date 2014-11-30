@@ -225,9 +225,9 @@ namespace TheBlindMan
                 velocity.Y = 0;
             }
 
-            if (Y + Bounds.Height > 1000)
+            if (Y + Bounds.Height > 1440)
             {
-                Y = 1000 - Bounds.Height;
+                Y = 1440 - Bounds.Height;
                 velocity.Y = 0;
             }
 
