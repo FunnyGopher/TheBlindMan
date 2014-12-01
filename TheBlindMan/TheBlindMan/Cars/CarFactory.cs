@@ -17,12 +17,14 @@ namespace TheBlindMan
         private const int MAX_NUMBER_OF_CARS = 12;
         private List<SoundEffect> soundEffects;
         private Car[] preFabCars;
+        private Car[] parkedFabCars;
 
         public CarFactory()
         {
             lanes = new List<Lane>();
             soundEffects = new List<SoundEffect>();
-            preFabCars = new Car[TOTAL_TYPES_OF_CARS];     
+            preFabCars = new Car[TOTAL_TYPES_OF_CARS];
+            parkedFabCars = new Car[TOTAL_TYPES_OF_CARS];  
         }
 
         public Car GenerateCar()
@@ -35,7 +37,7 @@ namespace TheBlindMan
 
         public Car GenerateParkedCar(float x, float y)
         {
-            Car parkedCar = GenerateCar();
+            Car parkedCar = new Car(parkedFabCars[random.Next(0, TOTAL_TYPES_OF_CARS)]); ;
             parkedCar.Park();
             parkedCar.X = x;
             parkedCar.Y = y - parkedCar.Animation.FrameSize.Y;
@@ -52,30 +54,48 @@ namespace TheBlindMan
         public virtual void LoadContent(ContentManager content)
         {
             Animation elCaminoAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/el_camino"),
-               new Point(228, 65), new Point(0, 0), new Point(2, 1), 2000);
+               new Point(228, 65), new Point(0, 0), new Point(2, 1), 5000);
+            Animation elCaminoStill = new Animation(content.Load<Texture2D>(@"Images/Cars/el_camino"),
+               new Point(228, 65), new Point(0, 0), new Point(1, 1), 5000);
             preFabCars[0] = new Car(elCaminoAnim);
+            parkedFabCars[0] = new Car(elCaminoStill);            
 
             Animation grayCarAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/gray_car"),
-               new Point(204, 75), new Point(0, 0), new Point(2, 1), 2000);
+               new Point(204, 75), new Point(0, 0), new Point(2, 1), 5000);
+            Animation grayCarStill = new Animation(content.Load<Texture2D>(@"Images/Cars/gray_car"),
+               new Point(204, 75), new Point(0, 0), new Point(1, 1), 5000);
             preFabCars[1] = new Car(grayCarAnim);
+            parkedFabCars[1] = new Car(grayCarStill);
 
             Animation hummerAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/hummer"),
-               new Point(207, 93), new Point(0, 0), new Point(2, 1), 2000);
+               new Point(207, 93), new Point(0, 0), new Point(2, 1), 7000);
+            Animation hummerStill = new Animation(content.Load<Texture2D>(@"Images/Cars/hummer"),
+               new Point(207, 93), new Point(0, 0), new Point(1, 1), 7000);
             preFabCars[2] = new Car(hummerAnim);
+            parkedFabCars[2] = new Car(hummerStill);
 
             Animation pickupAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/pickup_truck"),
-               new Point(225, 92), new Point(0, 0), new Point(2, 1), 2000); 
+               new Point(225, 92), new Point(0, 0), new Point(2, 1), 5000);
+            Animation pickupStill = new Animation(content.Load<Texture2D>(@"Images/Cars/pickup_truck"),
+               new Point(225, 92), new Point(0, 0), new Point(1, 1), 5000); 
             preFabCars[3] = new Car(pickupAnim);
+            parkedFabCars[3] = new Car(pickupStill);
 
             Animation redCarAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/red_car"),
-               new Point(185, 68), new Point(0, 0), new Point(2, 1), 2000);
+               new Point(185, 68), new Point(0, 0), new Point(2, 1), 5000);
+            Animation redCarStill = new Animation(content.Load<Texture2D>(@"Images/Cars/red_car"),
+               new Point(185, 68), new Point(0, 0), new Point(1, 1), 5000);
             preFabCars[4] = new Car(redCarAnim);
+            parkedFabCars[4] = new Car(redCarStill);
 
             Animation smartCarAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/smart_car"),
                new Point(86, 60), new Point(0, 0), new Point(2, 1), 2000);
+            Animation smartCarStill = new Animation(content.Load<Texture2D>(@"Images/Cars/smart_car"),
+               new Point(86, 60), new Point(0, 0), new Point(1, 1), 2000);
             preFabCars[5] = new Car(smartCarAnim);
+            parkedFabCars[5] = new Car(smartCarStill);
 
-            soundEffects.Add(content.Load<SoundEffect>(@"Audio/carSound1"));
+            soundEffects.Add(content.Load<SoundEffect>(@"Audio/car"));
         }
 
         public virtual void Update(GameTime gameTime)

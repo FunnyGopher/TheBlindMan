@@ -17,6 +17,7 @@ namespace TheBlindMan
         private const int MAX_DOG_DISTANCE = 64;
         private const int OLDMAN_BOUNDS_HEIGHT = 18;
 
+        private Random random = new Random();
         private Vector2 feelVector;
         private double leftVibPercentage;
         private double rightVibPercentage;
@@ -27,7 +28,7 @@ namespace TheBlindMan
         private bool hasAlerted;
 
         private AudioListener audioListener;
-        private SoundEffect dyingSound;
+        private List<SoundEffect> deathSounds;
         private SoundEffect whistleSound;
 
         private Icon exclamationPoint;
@@ -56,6 +57,7 @@ namespace TheBlindMan
             moveVector = new Vector2();
             velocity = new Vector2(0, 0);
             hasAlerted = false;
+            deathSounds = new List<SoundEffect>();
 
             Bounds = new Rectangle((int)X, (int)Y, 0, 0);
 
@@ -109,7 +111,11 @@ namespace TheBlindMan
             Players.OldMan.CurrentAnimationName = "standingBack";
             Players.OldMan.Direction = "Back";
 
-            dyingSound = content.Load<SoundEffect>(@"Audio/manDying");
+            deathSounds.Add(content.Load<SoundEffect>(@"Audio/death_1"));
+            deathSounds.Add(content.Load<SoundEffect>(@"Audio/death_2"));
+            deathSounds.Add(content.Load<SoundEffect>(@"Audio/death_3"));
+            deathSounds.Add(content.Load<SoundEffect>(@"Audio/death_4"));
+            deathSounds.Add(content.Load<SoundEffect>(@"Audio/death_5"));
             whistleSound = content.Load<SoundEffect>(@"Audio/whistle");
 
             exclamationPoint = new Icon(content.Load<Texture2D>(@"Images/OldMan/exclamation_point"), false);
@@ -262,7 +268,7 @@ namespace TheBlindMan
             Y += velocity.Y * (float) (gameTime.ElapsedGameTime.Milliseconds / 200f);
 
             Bounds = new Rectangle((int)X, (int)Y + (int)(16 * Scale), (int)(14 * Scale), (int)(16 * Scale));
-            audioListener.Position = new Vector3(X / 8f, 0, Y / 8f);
+            audioListener.Position = new Vector3((X + CurrentAnimation.FrameSize.X / 2) / 8f, 0, (Y + CurrentAnimation.FrameSize.Y / 2) / 8f);
         }
 
         // Feeling Mechanic
@@ -349,7 +355,8 @@ namespace TheBlindMan
         {
             if (Alive)
             {
-                SoundEffectInstance dying = dyingSound.CreateInstance();
+                int soundNumb = random.Next(0, deathSounds.Count);
+                SoundEffectInstance dying = deathSounds[soundNumb].CreateInstance();
                 dying.Volume = .05f;
                 dying.Play();
 

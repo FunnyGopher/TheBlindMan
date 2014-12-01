@@ -105,15 +105,11 @@ namespace TheBlindMan
 
         public void Park()
         {
-            Animation.SheetSize = new Point(1, 1);
             parked = true;
         }
 
         private void Animate(GameTime gameTime)
         {
-            if (parked)
-                return;
-
             animation.Update(gameTime);
         }
 
@@ -123,7 +119,8 @@ namespace TheBlindMan
                 return;
 
             x += speed * (float)(gameTime.ElapsedGameTime.Milliseconds / 200f);
-            emitter.Position = new Vector3((x + (Animation.FrameSize.X / 2)) / 8f, 0, (y + (Animation.FrameSize.Y / 2)) / 8f);
+            float emitterX = speed < 0 ? x : x + Animation.FrameSize.X;
+            emitter.Position = new Vector3(emitterX / 8f, 0, (y + (Animation.FrameSize.Y / 2)) / 8f);
         }
 
         private void UpdateBounds()
@@ -140,7 +137,7 @@ namespace TheBlindMan
             Vector2 toOldMan = new Vector2(Players.OldMan.X - X, -1 * (Players.OldMan.Y - Y));
             float distanceToOldMan = toOldMan.Length();
 
-            emitter.DopplerScale = distanceToOldMan * 2;
+            emitter.DopplerScale = distanceToOldMan * 1.2f;
             emitter.Forward = new Vector3(speed, 0, 0);
 
             if (distanceToOldMan < 240)

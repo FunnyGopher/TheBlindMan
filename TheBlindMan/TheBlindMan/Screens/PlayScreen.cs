@@ -93,8 +93,9 @@ namespace TheBlindMan
             carFactory.Update(gameTime);
 
             foreach (Car car in parkedCars)
+            {
                 car.Update(gameTime);
-
+            }
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);
 
