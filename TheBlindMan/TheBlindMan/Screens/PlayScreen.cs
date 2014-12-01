@@ -45,6 +45,7 @@ namespace TheBlindMan
             carManager.AddSpawnPoints(carSpawnPoints);
 
             Car parkedCar = carManager.GenerateCar();
+            parkedCar.Animate = false;
             parkedCar.X = 300;
             parkedCar.Y = 800;
             parkedCar.Speed = 0;
