@@ -106,6 +106,8 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
 
+            Console.WriteLine("X: " + X + ", Y: " + Y);
+
             if (!Alive)
                 return;
 
@@ -115,12 +117,11 @@ namespace TheBlindMan
             UpdateIcons();
         }
 
-        private void UpdateBounds()
+        public void UpdateBounds()
         {
-            Animation animation = Animations[CurrentAnimationName];
-            int boundsHeight = (int)(animation.FrameSize.Y * Scale * .3334f);
-            Bounds = new Rectangle((int)X, (int)Y + (int)(animation.FrameSize.Y * Scale) - boundsHeight,
-                (int)(animation.FrameSize.X * Scale), boundsHeight);
+            int boundsHeight = (int)(CurrentAnimation.FrameSize.Y * Scale * .3334f);
+            Bounds = new Rectangle((int)X, (int)Y + (int)(CurrentAnimation.FrameSize.Y * Scale) - boundsHeight,
+                (int)(CurrentAnimation.FrameSize.X * Scale), boundsHeight);
         }
 
         private void UpdateIcons()
@@ -344,7 +345,10 @@ namespace TheBlindMan
                 wimper.Play();
 
                 Console.WriteLine("Dog has died!");
-                CurrentAnimationName = "standing";
+                CurrentAnimationName = "standingBack";
+                X = 0;
+                Y = 0;
+                UpdateBounds();
                 Alive = false;
             }
         }

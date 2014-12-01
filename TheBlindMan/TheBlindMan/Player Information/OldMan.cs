@@ -66,9 +66,8 @@ namespace TheBlindMan
 
         private void UpdateBounds()
         {
-            Animation animation = Animations[CurrentAnimationName];
-            Bounds = new Rectangle((int)X, (int)Y + (int)(animation.FrameSize.Y * Scale) - (int)(OLDMAN_BOUNDS_HEIGHT * Scale),
-                (int)(animation.FrameSize.X * Scale), (int)(OLDMAN_BOUNDS_HEIGHT * Scale));
+            Bounds = new Rectangle((int)X, (int)Y + (int)(CurrentAnimation.FrameSize.Y * Scale) - (int)(OLDMAN_BOUNDS_HEIGHT * Scale),
+                (int)(CurrentAnimation.FrameSize.X * Scale), (int)(OLDMAN_BOUNDS_HEIGHT * Scale));
         }
 
         public override void LoadContent(ContentManager content)
@@ -359,9 +358,14 @@ namespace TheBlindMan
 
                 Players.OldMan.X = 480;
                 Players.OldMan.Y = 740;
+                Players.OldMan.CurrentAnimationName = "standingBack";
+                UpdateBounds();
 
                 Players.Dog.X = 520;
                 Players.Dog.Y = 770;
+                Players.Dog.CurrentAnimationName = "standingBack";
+                Players.Dog.UpdateBounds();
+
                 Players.Dog.Alive = true;
             }
         }
