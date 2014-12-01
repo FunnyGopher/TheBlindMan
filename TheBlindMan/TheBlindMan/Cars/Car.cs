@@ -123,7 +123,7 @@ namespace TheBlindMan
                 return;
 
             x += speed * (float)(gameTime.ElapsedGameTime.Milliseconds / 200f);
-            emitter.Position = new Vector3(x / 8f, 0, y / 8f);
+            emitter.Position = new Vector3((x + (Animation.FrameSize.X / 2)) / 8f, 0, (y + (Animation.FrameSize.Y / 2)) / 8f);
         }
 
         private void UpdateBounds()
