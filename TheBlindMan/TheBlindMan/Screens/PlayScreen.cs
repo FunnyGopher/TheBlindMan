@@ -45,9 +45,21 @@ namespace TheBlindMan
             carSpawnPoints.Add(new Point(1210, 408));
             carFactory.AddSpawnPoints(carSpawnPoints);
              * */
+            Console.WriteLine("Makin' some lanes");
 
             List<Lane> carLanes = new List<Lane>();
-            carLanes.Add(new Lane(new Point(-130, 486), new Point(1210, 486)));
+
+            // These lanes are the top 4 lanes
+            carLanes.Add(new Lane(new Point(1210, 199), new Point(-130, 199), 10, 0, 1, 3));
+            carLanes.Add(new Lane(new Point(1210, 272), new Point(-130, 272), 15, 15));
+            carLanes.Add(new Lane(new Point(1210, 339), new Point(-130, 339), 20, 35));
+            carLanes.Add(new Lane(new Point(1210, 408), new Point(-130, 408), 25, 55));
+
+            carLanes.Add(new Lane(new Point(-130, 486), new Point(1210, 486), 25, 60));
+            carLanes.Add(new Lane(new Point(-130, 554), new Point(1210, 554), 20, 40));
+            carLanes.Add(new Lane(new Point(-130, 624), new Point(1210, 624), 15, 20));
+            carLanes.Add(new Lane(new Point(-130, 691), new Point(1210, 691), 10, 10, 1, 3));            
+
             carFactory.AddLanes(carLanes);
 
             Car parkedCar = carFactory.GenerateCar();
@@ -83,6 +95,8 @@ namespace TheBlindMan
 
             foreach (Car car in parkedCars)
                 car.Update(gameTime);
+
+
 
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);

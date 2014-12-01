@@ -15,25 +15,51 @@ namespace TheBlindMan
         private int maxCarCount;
         private int safeSpawnDistance;
 
+        private int direction;
+        private int speed;
+
+        private Random random = new Random();
+        private int speedMod;
+
         public int MaxCars { get { return maxCarCount; } }
 
         public int CurrentCarCount() { return cars.Count(); }
 
-        public Lane(Point startPosition, Point endPosition,
-            int maxCarCount = 2, int safeSpawnDistance = 200)
+        public Lane(Point startPosition, Point endPosition, int speed,
+            int safeSpawnDistance = 0, int speedMod = 1, int maxCarCount = 2)
         {
             cars = new List<Car>();
             carsToRemove = new List<Car>();
             this.startPosition = startPosition;
             this.endPosition = endPosition;
             this.maxCarCount = maxCarCount;
-            this.safeSpawnDistance = safeSpawnDistance;
+            this.safeSpawnDistance = 300 + safeSpawnDistance;
+
+            this.direction = endPosition.X - startPosition.X;
+            this.speed = speed;
+            this.speedMod = speedMod;
         }
 
         public void AddCar(Car car)
         {
             if (IsOpen())
+            {
+                car.X = startPosition.X;
+                car.Y = startPosition.Y;
+
+                car.Speed = speed;
+                if(direction < 0)
+                    car.Speed *= -1;
+
+                int dir = random.Next(0, 2);
+                int mod = random.Next(0, speedMod + 1);
+
+                if (dir == 1)
+                    mod *= -1;
+                car.Speed += mod;
+
                 cars.Add(car);
+            }
         }
 
         public bool IsOpen()
@@ -60,16 +86,18 @@ namespace TheBlindMan
                 if (car.X > endPosition.X && car.X > startPosition.X || 
                     car.X < endPosition.X && car.X < startPosition.X)
                     carsToRemove.Add(car);
-            foreach (Car car in carsToRemove)
-                cars.Remove(car);
-            carsToRemove.Clear();
         }
 
         public void Update(GameTime gameTime)
         {
-            
             foreach (Car car in cars)
                 car.Update(gameTime);
+
+            RemoveCars();
+
+            foreach (Car car in carsToRemove)
+                cars.Remove(car);
+            carsToRemove.Clear();
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

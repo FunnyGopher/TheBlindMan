@@ -90,10 +90,12 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
-            if(animate)
+            if(speed > 0)
                 animation.Update(gameTime);
             Move(gameTime);
-            PlaySound();
+
+            if(speed > 0)
+                PlaySound();
             Collide();
             
         }

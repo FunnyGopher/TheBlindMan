@@ -14,6 +14,7 @@ namespace TheBlindMan
         private List<Lane> lanes;
         private Random random = new Random();
         private const int TOTAL_TYPES_OF_CARS = 6;
+        private const int MAX_NUMBER_OF_CARS = 12;
         private List<SoundEffect> soundEffects;
         private Car[] preFabCars;
 
@@ -63,14 +64,29 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
+            int numberOfCars = 0;
+            int randomNumb = 0;
+            List<Lane> openLanes = new List<Lane>();
+
             foreach (Lane lane in lanes)
+            {
                 lane.Update(gameTime);
+                if (lane.IsOpen())
+                    openLanes.Add(lane);
+                numberOfCars += lane.CurrentCarCount();
+            }
+
+            if (openLanes.Count != 0 && numberOfCars < MAX_NUMBER_OF_CARS)
+            {
+                randomNumb = random.Next(0, openLanes.Count - 1);
+                AddCar(openLanes[randomNumb], GenerateCar());
+        }
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //foreach (Lane lane in lanes)
-                //lane.Draw(gameTime, spriteBatch);
+            foreach (Lane lane in lanes)
+                lane.Draw(gameTime, spriteBatch);
         }
 
         public void AddCar(Lane lane, Car car)
