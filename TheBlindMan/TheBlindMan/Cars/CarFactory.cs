@@ -33,6 +33,22 @@ namespace TheBlindMan
             return car;
         }
 
+        public Car GenerateParkedCar(float x, float y)
+        {
+            Car parkedCar = GenerateCar();
+            parkedCar.Park();
+            parkedCar.X = x;
+            parkedCar.Y = y - parkedCar.Animation.FrameSize.Y;
+
+            int direction = random.Next(0, 2);
+            if (direction == 0)
+                parkedCar.Speed = -1;
+            else
+                parkedCar.Speed = 1;
+
+            return parkedCar;
+        }
+
         public virtual void LoadContent(ContentManager content)
         {
             Animation elCaminoAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/el_camino"),

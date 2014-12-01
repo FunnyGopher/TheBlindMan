@@ -54,6 +54,11 @@ namespace TheBlindMan
             set { this.currentAnimationName = value;}
         }
 
+        public Animation CurrentAnimation
+        {
+            get { return Animations[CurrentAnimationName]; }
+        }
+
         public Dictionary<string, Animation> Animations
         {
             get { return animations; }

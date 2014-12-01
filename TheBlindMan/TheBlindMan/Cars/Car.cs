@@ -96,14 +96,10 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
-            if (!parked)
-                animation.Update(gameTime);
-
+            Animate(gameTime);
             Move(gameTime);
-
-            if (!parked)
-                PlaySound();
-                
+            UpdateBounds();
+            PlaySound();
             Collide();
         }
 
@@ -113,11 +109,21 @@ namespace TheBlindMan
             parked = true;
         }
 
+        private void Animate(GameTime gameTime)
+        {
+            if (parked)
+                return;
+
+            animation.Update(gameTime);
+        }
+
         private void Move(GameTime gameTime)
         {
+            if (parked)
+                return;
+
             x += speed * (float)(gameTime.ElapsedGameTime.Milliseconds / 200f);
-            emitter.Position = new Vector3(X / 8f, 0, Y / 8f);
-            UpdateBounds();
+            emitter.Position = new Vector3(x / 8f, 0, y / 8f);
         }
 
         private void UpdateBounds()
@@ -128,6 +134,9 @@ namespace TheBlindMan
 
         private void PlaySound()
         {
+            if (parked)
+                return;
+
             Vector2 toOldMan = new Vector2(Players.OldMan.X - X, -1 * (Players.OldMan.Y - Y));
             float distanceToOldMan = toOldMan.Length();
 
@@ -149,44 +158,60 @@ namespace TheBlindMan
         {
             if (bounds.Intersects(Players.OldMan.Bounds))
             {
-                if(!parked)
+                if(parked)
                 {
-                    Players.OldMan.Hit();
-                }
-                else
-                {
-                    float xDir = Players.OldMan.Velocity.X / Math.Abs(Players.OldMan.Velocity.X);
-                    float yDir = Players.OldMan.Velocity.Y / Math.Abs(Players.OldMan.Velocity.Y);
+                    float xTemp = Players.OldMan.Velocity.X == 0 ? 1 : Players.OldMan.Velocity.X;
+                    float yTemp = Players.OldMan.Velocity.Y == 0 ? 1 : Players.OldMan.Velocity.Y;
 
-                    Console.WriteLine("xDir: " + xDir + ", yDir: " + yDir);
+                    float xDir = Players.OldMan.Velocity.X / Math.Abs(xTemp);
+                    float yDir = Players.OldMan.Velocity.Y / Math.Abs(yTemp);
+
+                    Console.WriteLine("Colliding!");
 
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.OldMan.Bounds);
+
                     if (overlap.Width < overlap.Height)
-                        Players.OldMan.X += -xDir * overlap.Width;
-                    else if(overlap.Height < overlap.Width)
+                    {
+                        if (Players.OldMan.X < X)
+                            Players.OldMan.X = X - Players.OldMan.CurrentAnimation.FrameSize.X - 5;
+
+                        if (Players.OldMan.X > X)
+                            Players.OldMan.X = X + Animation.FrameSize.X + 5;
+                    }
+                    else if (overlap.Height < overlap.Width)
                         Players.OldMan.Y += -yDir * overlap.Height;
-                    else if(overlap.Height == overlap.Width)
+                    else if (overlap.Height == overlap.Width)
                     {
                         Players.OldMan.X += -xDir * overlap.Width;
                         Players.OldMan.Y += -yDir * overlap.Height;
                     }
                 }
+                else
+                {
+                    Players.OldMan.Hit();
+                }
             }
 
             if (bounds.Intersects(Players.Dog.Bounds))
             {
-                if (!parked)
+                if (parked)
                 {
-                    Players.Dog.Hit();
-                }
-                else
-                {
-                    float xDir = Players.Dog.Velocity.X / Math.Abs(Players.Dog.Velocity.X);
-                    float yDir = Players.Dog.Velocity.Y / Math.Abs(Players.Dog.Velocity.Y);
+
+                    float xTemp = Players.Dog.Velocity.X == 0 ? 1 : Players.Dog.Velocity.X;
+                    float yTemp = Players.Dog.Velocity.Y == 0 ? 1 : Players.Dog.Velocity.Y;
+
+                    float xDir = Players.Dog.Velocity.X / Math.Abs(xTemp);
+                    float yDir = Players.Dog.Velocity.Y / Math.Abs(yTemp);
 
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.Dog.Bounds);
                     if (overlap.Width < overlap.Height)
-                        Players.Dog.X += -xDir * overlap.Width;
+                    {
+                        if (Players.Dog.X < X)
+                            Players.Dog.X = X - Players.Dog.CurrentAnimation.FrameSize.X - 5;
+
+                        if (Players.Dog.X > X)
+                            Players.Dog.X = X + Animation.FrameSize.X + 5;
+                    }
                     else if (overlap.Height < overlap.Width)
                         Players.Dog.Y += -yDir * overlap.Height;
                     else if (overlap.Height == overlap.Width)
@@ -194,6 +219,10 @@ namespace TheBlindMan
                         Players.Dog.X += -xDir * overlap.Width;
                         Players.Dog.Y += -yDir * overlap.Height;
                     }
+                }
+                else
+                {
+                    Players.Dog.Hit();
                 }
             }
         }

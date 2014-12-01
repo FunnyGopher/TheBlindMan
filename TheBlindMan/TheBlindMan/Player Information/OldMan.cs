@@ -32,6 +32,8 @@ namespace TheBlindMan
 
         private Icon exclamationPoint;
 
+        private PlayScreen screen;
+
         public Vector2 Velocity
         {
             get { return velocity; }
@@ -42,10 +44,10 @@ namespace TheBlindMan
             get { return audioListener; }
         }
 
-        public OldMan(PlayerIndex index) 
-            : this(index, 0, 0) {}
+        public OldMan(PlayerIndex index, PlayScreen screen) 
+            : this(index, screen, 0, 0) {}
 
-        public OldMan(PlayerIndex index, float x, float y)
+        public OldMan(PlayerIndex index, PlayScreen screen, float x, float y)
             : base(index, x, y)
         {
             Speed = 10;
@@ -58,6 +60,8 @@ namespace TheBlindMan
             Bounds = new Rectangle((int)X, (int)Y, 0, 0);
 
             audioListener = new AudioListener();
+
+            this.screen = screen;
         }
 
         private void UpdateBounds()
@@ -126,13 +130,13 @@ namespace TheBlindMan
             Actions();
             UpdateExclamationPoint();
 
-            Console.WriteLine("X: " + X + ", Y: " + Y);
+            Console.WriteLine("X: " + X  + ", Y: " + Y + (int)Animations[CurrentAnimationName].FrameSize.Y);
         }
 
         private void UpdateExclamationPoint()
         {
-            exclamationPoint.X = (X + (Animations[CurrentAnimationName].FrameSize.X) / 2) - (exclamationPoint.Texture.Width / 2);
-            exclamationPoint.Y = (Y - exclamationPoint.Texture.Height + 7);
+            exclamationPoint.X = (X + (Animations[CurrentAnimationName].FrameSize.X) / 2) - (exclamationPoint.Texture.Width / 2) + 3;
+            exclamationPoint.Y = (Y - exclamationPoint.Texture.Height - 7);
         }
 
         // Movement
@@ -252,9 +256,10 @@ namespace TheBlindMan
                 velocity.Y = 0;
             }
 
-            if (Y + Bounds.Height > 1440)
+            float height = Animations[CurrentAnimationName].FrameSize.Y;
+            if (Y + height > 1430)
             {
-                Y = 1440 - Bounds.Height;
+                Y = 1430 - height;
                 velocity.Y = 0;
             }
 
@@ -324,14 +329,14 @@ namespace TheBlindMan
         {
             KeyboardState keyState = Keyboard.GetState();
 
-            if ((GamePadState.Buttons.RightStick == ButtonState.Pressed || keyState.IsKeyDown(Keys.L)) && hasAlerted == false)
+            if (GamePadState.Buttons.RightStick == ButtonState.Pressed)
             {
-                Alert();
+                //Alert();
                 exclamationPoint.Visible = true;
                 hasAlerted = true;
             }
 
-            if (GamePadState.Buttons.RightStick == ButtonState.Released || keyState.IsKeyUp(Keys.L))
+            if (GamePadState.Buttons.RightStick == ButtonState.Released)
             {
                 exclamationPoint.Visible = false;
                 hasAlerted = false;
@@ -355,12 +360,13 @@ namespace TheBlindMan
                 dying.Play();
 
                 Console.WriteLine("The old man has died!");
-                CurrentAnimationName = "standingFront";
-                //Alive = false;
-                X = 540;
-                Y = 900;
-                Players.Dog.X = 570;
-                Players.Dog.Y = 920;
+                CurrentAnimationName = "standingBack";
+
+                Players.OldMan.X = 480;
+                Players.OldMan.Y = 740;
+
+                Players.Dog.X = 520;
+                Players.Dog.Y = 770;
                 Players.Dog.Alive = true;
             }
         }

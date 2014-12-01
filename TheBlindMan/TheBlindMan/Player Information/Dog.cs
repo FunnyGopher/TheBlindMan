@@ -246,9 +246,11 @@ namespace TheBlindMan
                 velocity.Y = 0;
             }
 
-            if (Y + Bounds.Height > 1440)
+            float height = Animations[CurrentAnimationName].FrameSize.Y;
+
+            if (Y + height > 1430)
             {
-                Y = 1440 - Bounds.Height;
+                Y = 1430 - height;
                 velocity.Y = 0;
             }
 

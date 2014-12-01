@@ -18,14 +18,14 @@ namespace TheBlindMan
 
         private CarFactory carFactory;
         private Rectangle winZone;
-        private Car[] parkedCars;
+        private List<Car> parkedCars;
 
         public PlayScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
             winZone = new Rectangle(0, 0, 1080, 129);
             carFactory = new CarFactory();
-            parkedCars = new Car[1];
+            parkedCars = new List<Car>();
         }
 
         public void Initialize()
@@ -50,12 +50,21 @@ namespace TheBlindMan
 
             carFactory.AddLanes(carLanes);
 
-            Car parkedCar = carFactory.GenerateCar();
-            parkedCar.Park();
-            parkedCar.X = 300;
-            parkedCar.Y = 800;
-            parkedCars[0] = parkedCar;
+            parkedCars.Add(carFactory.GenerateParkedCar(130, 1040));
+            parkedCars.Add(carFactory.GenerateParkedCar(310, 1175));
+            parkedCars.Add(carFactory.GenerateParkedCar(560, 1172));
+            parkedCars.Add(carFactory.GenerateParkedCar(310, 968));
+            parkedCars.Add(carFactory.GenerateParkedCar(560, 1032));
+            parkedCars.Add(carFactory.GenerateParkedCar(310, 1376));
+            parkedCars.Add(carFactory.GenerateParkedCar(560, 1304));
+            parkedCars.Add(carFactory.GenerateParkedCar(560, 1376));
+
+            parkedCars.Add(carFactory.GenerateParkedCar(960, 1040));
+            parkedCars.Add(carFactory.GenerateParkedCar(960, 1304));
+            parkedCars.Add(carFactory.GenerateParkedCar(-80, 1240));
         }
+
+        
 
         public override void LoadContent(ContentManager content)
         {
@@ -63,7 +72,7 @@ namespace TheBlindMan
             this.bgSound = content.Load<SoundEffect>(@"Audio/trafAmbi");
             this.bgSoundInstance = bgSound.CreateInstance();
 
-            Players.OldMan = new OldMan(PlayerIndex.One);
+            Players.OldMan = new OldMan(PlayerIndex.One, this);
             Players.Dog = new Dog(PlayerIndex.Two);
 
             Players.OldMan.LoadContent(content);
@@ -90,7 +99,7 @@ namespace TheBlindMan
             Players.Dog.Update(gameTime);
 
             if (float.IsNaN(Players.OldMan.X) || float.IsNaN(Players.OldMan.Y))
-                SpawnPlayers();
+                InitialSpawn();
 
             if (winZone.Intersects(Players.OldMan.Bounds))
                 game.ActiveScreen = game.StartScreen;
@@ -113,13 +122,13 @@ namespace TheBlindMan
             Players.Dog.Draw(gameTime, spriteBatch);
         }
 
-        private void SpawnPlayers()
+        private void InitialSpawn()
         {
-            Players.OldMan.X = 540;
-            Players.OldMan.Y = 1350;
+            Players.OldMan.X = 190;
+            Players.OldMan.Y = 1360;
 
-            Players.Dog.X = 510;
-            Players.Dog.Y = 1380;
+            Players.Dog.X = 230;
+            Players.Dog.Y = 1390;
         }
 
         private void PlayBackgroundSound()
@@ -130,7 +139,7 @@ namespace TheBlindMan
 
         public override void Start()
         {
-            SpawnPlayers();
+            InitialSpawn();
             PlayBackgroundSound();
             base.Start();
         }
