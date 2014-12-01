@@ -124,22 +124,18 @@ namespace TheBlindMan
             gamePadState = GamePad.GetState(playerIndex);
 
             if (animations.Keys.Contains(currentAnimationName))
-            {
-                Animation currentAnimation = animations[currentAnimationName];
-                currentAnimation.Update(gameTime);
-            }
+                CurrentAnimation.Update(gameTime);
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (animations.Keys.Contains(currentAnimationName))
             {
-                Animation currentAnimation = animations[currentAnimationName];
-                float bottomEdge = y + currentAnimation.FrameSize.Y;
+                float bottomEdge = y + CurrentAnimation.FrameSize.Y;
 
-                spriteBatch.Draw(currentAnimation.TextureImage, new Vector2(x, y),
-                currentAnimation.GetCurrentFrameRectangle(), Color.White, 0, new Vector2(0, 0),
-                scale, SpriteEffects.None, 1f - (bottomEdge / 1440f));
+                spriteBatch.Draw(CurrentAnimation.TextureImage, new Vector2(x, y),
+                    CurrentAnimation.GetCurrentFrameRectangle(), Color.White, 0, new Vector2(0, 0),
+                    scale, SpriteEffects.None, 1f - (bottomEdge / 1440f));
             }
         }
 

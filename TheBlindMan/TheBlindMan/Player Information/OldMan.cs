@@ -120,17 +120,13 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
             if (!Alive)
-            {
                 return;
-            }
 
             FeelingMechanic();
             Move(gameTime);
             UpdateBounds();
             Actions();
             UpdateExclamationPoint();
-
-            Console.WriteLine("X: " + X  + ", Y: " + Y + (int)Animations[CurrentAnimationName].FrameSize.Y);
         }
 
         private void UpdateExclamationPoint()
@@ -327,12 +323,9 @@ namespace TheBlindMan
         // Actions
         private void Actions()
         {
-            KeyboardState keyState = Keyboard.GetState();
-
-            if (GamePadState.Buttons.RightStick == ButtonState.Pressed)
+            if (GamePadState.Buttons.RightStick == ButtonState.Pressed && !hasAlerted)
             {
-                //Alert();
-                exclamationPoint.Visible = true;
+                Alert();
                 hasAlerted = true;
             }
 
@@ -348,6 +341,8 @@ namespace TheBlindMan
             SoundEffectInstance whistle = whistleSound.CreateInstance();
             whistle.Volume = .25f;
             whistle.Play();
+
+            exclamationPoint.Visible = true;
             Console.WriteLine("*Whistle* Where's my dog!!!");
         }
 

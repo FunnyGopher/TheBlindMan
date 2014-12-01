@@ -23,6 +23,9 @@ namespace TheBlindMan
         private SoundEffect growlSound;
         private SoundEffect wimperSound;
 
+        private Icon barkIcon;
+        private Icon growlIcon;
+
         public Vector2 Velocity
         {
             get { return velocity; }
@@ -94,20 +97,22 @@ namespace TheBlindMan
             barkSound = content.Load<SoundEffect>(@"Audio/bark");
             growlSound = content.Load<SoundEffect>(@"Audio/growl");
             wimperSound = content.Load<SoundEffect>(@"Audio/dogYelp");
+
+            barkIcon = new Icon(content.Load<Texture2D>(@"Images/Dog/bark"), false);
+            growlIcon = new Icon(content.Load<Texture2D>(@"Images/Dog/growl"), false);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            //Console.WriteLine("X: " + X + ", Y: " + Y);
+
             if (!Alive)
-            {
                 return;
-            }
 
             Move(gameTime);
             UpdateBounds();
             Actions();
+            UpdateIcons();
         }
 
         private void UpdateBounds()
@@ -116,6 +121,15 @@ namespace TheBlindMan
             int boundsHeight = (int)(animation.FrameSize.Y * Scale * .3334f);
             Bounds = new Rectangle((int)X, (int)Y + (int)(animation.FrameSize.Y * Scale) - boundsHeight,
                 (int)(animation.FrameSize.X * Scale), boundsHeight);
+        }
+
+        private void UpdateIcons()
+        {
+            barkIcon.X = (X + (Animations[CurrentAnimationName].FrameSize.X) / 2) - (barkIcon.Texture.Width / 2) + 3;
+            barkIcon.Y = (Y - barkIcon.Texture.Height - 7);
+
+            growlIcon.X = (X + (Animations[CurrentAnimationName].FrameSize.X) / 2) - (growlIcon.Texture.Width / 2) + 3;
+            growlIcon.Y = (Y - growlIcon.Texture.Height - 7);
         }
 
         // Movement
@@ -278,11 +292,13 @@ namespace TheBlindMan
 
             if (GamePadState.Buttons.A == ButtonState.Released)
             {
+                barkIcon.Visible = false;
                 hasBarked = false;
             }
 
             if (GamePadState.Buttons.B == ButtonState.Released)
             {
+                growlIcon.Visible = false;
                 hasGrowled = false;
             }
         }
@@ -296,6 +312,8 @@ namespace TheBlindMan
             bark.Apply3D(Players.OldMan.AudioListener, emitter);
             bark.Play();
 
+            barkIcon.Visible = true;
+
             Console.WriteLine("Bark!");
         }
 
@@ -307,6 +325,9 @@ namespace TheBlindMan
             SoundEffectInstance growl = growlSound.CreateInstance();
             growl.Apply3D(Players.OldMan.AudioListener, emitter);
             growl.Play();
+
+            growlIcon.Visible = true;
+
             Console.WriteLine("Grrrrrrrr!");
         }
 
@@ -325,6 +346,24 @@ namespace TheBlindMan
                 Console.WriteLine("Dog has died!");
                 CurrentAnimationName = "standing";
                 Alive = false;
+            }
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+            if (barkIcon.Visible)
+            {
+                spriteBatch.Draw(barkIcon.Texture, new Vector2(barkIcon.X, barkIcon.Y),
+                    barkIcon.Texture.Bounds, Color.White, 0, new Vector2(0, 0),
+                    1, SpriteEffects.None, 1f - ((Y + CurrentAnimation.FrameSize.Y) / 1440f));
+            }
+
+            if (growlIcon.Visible)
+            {
+                spriteBatch.Draw(growlIcon.Texture, new Vector2(growlIcon.X, growlIcon.Y),
+                     growlIcon.Texture.Bounds, Color.White, 0, new Vector2(0, 0),
+                     1, SpriteEffects.None, 1f - ((Y + CurrentAnimation.FrameSize.Y) / 1440f));
             }
         }
     }
