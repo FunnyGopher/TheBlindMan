@@ -96,6 +96,7 @@ namespace TheBlindMan
 
             playScreen = new PlayScreen(this, spriteBatch);
             playScreen.LoadContent(Content);
+            playScreen.Initialize();
             Components.Add(playScreen);
 
             infoScreen = new InfoScreen(this, spriteBatch);
