@@ -165,15 +165,18 @@ namespace TheBlindMan
                 }
                 else
                 {
+                    float xSpeed = Math.Abs(Players.Dog.Velocity.X) / Players.Dog.Velocity.X;
+                    float ySpeed = Math.Abs(Players.Dog.Velocity.Y) / Players.Dog.Velocity.Y;
+
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.Dog.Bounds);
                     if (overlap.Width > overlap.Height)
-                        Players.Dog.X += -Players.Dog.Speed;
+                        Players.Dog.X += -xSpeed;
                     else if (overlap.Height > overlap.Width)
-                        Players.Dog.Y += -Players.Dog.Speed;
+                        Players.Dog.Y += -ySpeed;
                     else if (overlap.Height == overlap.Width)
                     {
-                        Players.Dog.X += -Players.Dog.Speed;
-                        Players.Dog.Y += -Players.Dog.Speed;
+                        Players.Dog.X += -xSpeed;
+                        Players.Dog.Y += -ySpeed;
                     }
                 }
 

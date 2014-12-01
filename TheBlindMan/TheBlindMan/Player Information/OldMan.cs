@@ -335,6 +335,7 @@ namespace TheBlindMan
                 Y = 900;
                 Players.Dog.X = 570;
                 Players.Dog.Y = 920;
+                Players.Dog.Alive = true;
             }
         }
 
