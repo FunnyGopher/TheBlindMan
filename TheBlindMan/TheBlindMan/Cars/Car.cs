@@ -123,12 +123,12 @@ namespace TheBlindMan
 
         private void Collide()
         {
-            if (bounds.Intersects(Players.OldMan.Bounds))
+            if (bounds.Intersects(Players.OldMan.Bounds) && speed > 0)
             {
                 Players.OldMan.Hit();
             }
 
-            if (bounds.Intersects(Players.Dog.Bounds))
+            if (bounds.Intersects(Players.Dog.Bounds) && speed > 0)
             {
                 Players.Dog.Hit();
             }
