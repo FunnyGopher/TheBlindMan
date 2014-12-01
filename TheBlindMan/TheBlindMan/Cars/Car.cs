@@ -13,6 +13,7 @@ namespace TheBlindMan
         private float x, y;
         private float speed;
         private Animation animation;
+        private bool animate;
 
         private Rectangle bounds;
         private int boundsHeight;
@@ -37,6 +38,12 @@ namespace TheBlindMan
         {
             get { return this.speed; }
             set { this.speed = value; }
+        }
+
+        public bool Animate
+        {
+            get { return this.animate; }
+            set { this.animate = value; }
         }
 
         public Rectangle Bounds
@@ -73,6 +80,7 @@ namespace TheBlindMan
             this.y = y;
             this.speed = speed;
             this.animation = animation;
+            this.animate = true;
 
             this.boundsHeight = boundsHeight;
             bounds = new Rectangle((int)X, (int)Y + animation.FrameSize.Y - boundsHeight, (int)animation.FrameSize.X, boundsHeight);
@@ -82,7 +90,8 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
-            animation.Update(gameTime);
+            if(animate)
+                animation.Update(gameTime);
             Move(gameTime);
             PlaySound();
             Collide();
@@ -131,15 +140,18 @@ namespace TheBlindMan
                 }
                 else
                 {
+                    float xSpeed = Math.Abs(Players.OldMan.Velocity.X) / Players.OldMan.Velocity.X;
+                    float ySpeed = Math.Abs(Players.OldMan.Velocity.Y) / Players.OldMan.Velocity.Y;
+
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.OldMan.Bounds);
-                    if (overlap.Width > overlap.Height)
-                        Players.OldMan.X += -Players.OldMan.Speed;
-                    else if(overlap.Height > overlap.Width)
-                        Players.OldMan.Y += -Players.OldMan.Speed;
+                    if (overlap.Width < overlap.Height)
+                        Players.OldMan.X += -xSpeed;
+                    else if(overlap.Height < overlap.Width)
+                        Players.OldMan.Y += -ySpeed;
                     else if(overlap.Height == overlap.Width)
                     {
-                        Players.OldMan.X += -Players.OldMan.Speed;
-                        Players.OldMan.Y += -Players.OldMan.Speed;
+                        Players.OldMan.X += -xSpeed;
+                        Players.OldMan.Y += -ySpeed;
                     }
                 }
                 
@@ -153,15 +165,18 @@ namespace TheBlindMan
                 }
                 else
                 {
+                    float xSpeed = Math.Abs(Players.Dog.Velocity.X) / Players.Dog.Velocity.X;
+                    float ySpeed = Math.Abs(Players.Dog.Velocity.Y) / Players.Dog.Velocity.Y;
+
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.Dog.Bounds);
                     if (overlap.Width > overlap.Height)
-                        Players.Dog.X += -Players.Dog.Speed;
+                        Players.Dog.X += -xSpeed;
                     else if (overlap.Height > overlap.Width)
-                        Players.Dog.Y += -Players.Dog.Speed;
+                        Players.Dog.Y += -ySpeed;
                     else if (overlap.Height == overlap.Width)
                     {
-                        Players.Dog.X += -Players.Dog.Speed;
-                        Players.Dog.Y += -Players.Dog.Speed;
+                        Players.Dog.X += -xSpeed;
+                        Players.Dog.Y += -ySpeed;
                     }
                 }
 
