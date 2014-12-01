@@ -71,7 +71,7 @@ namespace TheBlindMan
         public Car(Car car)
             : this(car.animation, car.boundsHeight) {}
 
-        public Car(Animation animation, int boundsHeight)
+        public Car(Animation animation, int boundsHeight = 35)
             : this(animation, 0, 0, 0, boundsHeight) {}
 
         public Car(Animation animation, float x, float y, float speed, int boundsHeight) 

@@ -13,7 +13,7 @@ namespace TheBlindMan
     {
         private List<Lane> lanes;
         private Random random = new Random();
-        private const int TOTAL_TYPES_OF_CARS = 1;
+        private const int TOTAL_TYPES_OF_CARS = 6;
         private List<SoundEffect> soundEffects;
         private Car[] preFabCars;
 
@@ -29,16 +29,34 @@ namespace TheBlindMan
             Car car = new Car(preFabCars[random.Next(0, TOTAL_TYPES_OF_CARS)]);
             SoundEffect soundEffect = soundEffects[random.Next(0, soundEffects.Count)];
             car.SoundEffect = soundEffect;
-
             return car;
         }
 
         public virtual void LoadContent(ContentManager content)
         {
-            Animation carAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/car_sheet"),
-               new Point(128, 40), new Point(0, 0), new Point(2, 1), 2000);
-            Car car = new Car(carAnim, 20);
-            preFabCars[0] = car;
+            Animation elCaminoAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/el_camino"),
+               new Point(228, 65), new Point(0, 0), new Point(2, 1), 2000);
+            preFabCars[0] = new Car(elCaminoAnim);
+
+            Animation grayCarAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/gray_car"),
+               new Point(204, 75), new Point(0, 0), new Point(2, 1), 2000);
+            preFabCars[1] = new Car(grayCarAnim);
+
+            Animation hummerAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/hummer"),
+               new Point(207, 93), new Point(0, 0), new Point(2, 1), 2000);
+            preFabCars[2] = new Car(hummerAnim);
+
+            Animation pickupAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/pickup_truck"),
+               new Point(225, 92), new Point(0, 0), new Point(2, 1), 2000); 
+            preFabCars[3] = new Car(pickupAnim);
+
+            Animation redCarAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/red_car"),
+               new Point(185, 68), new Point(0, 0), new Point(2, 1), 2000);
+            preFabCars[4] = new Car(redCarAnim);
+
+            Animation smartCarAnim = new Animation(content.Load<Texture2D>(@"Images/Cars/smart_car"),
+               new Point(86, 60), new Point(0, 0), new Point(2, 1), 2000);
+            preFabCars[5] = new Car(smartCarAnim);
 
             soundEffects.Add(content.Load<SoundEffect>(@"Audio/carSound1"));
         }
