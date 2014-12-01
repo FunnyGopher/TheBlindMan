@@ -13,8 +13,8 @@ namespace TheBlindMan
     {
         private TheBlindManGame game;
         private List<Lane> lane;
-        //private List<Car> carsToRemove;
-        //private List<Point> spawnPoints;
+        private List<Car> carsToRemove;
+        private List<Point> spawnPoints;
         private Random random = new Random();
         private const int TOTAL_NUMBER_OF_CARS = 10;
         private const int TOTAL_TYPES_OF_CARS = 1;
@@ -26,7 +26,7 @@ namespace TheBlindMan
         {
             this.game = game;
 
-            cars = new List<Car>();
+            //cars = new List<Car>();
             carsToRemove = new List<Car>();
             spawnPoints = new List<Point>();
             soundEffects = new List<SoundEffect>();
@@ -56,13 +56,12 @@ namespace TheBlindMan
             while (!(goodSpawnFound))
             {
                 Point SpawnPoint = spawnPoints[random.Next(0, 8)];
-                foreach (Car car in cars)
-                {
-                }
+                //foreach (Car car in cars)
+                //{
+                //}
             }
             return new Point(1, 1);
         }
-        */
 
         public virtual void LoadContent(ContentManager content)
         {
@@ -96,13 +95,13 @@ namespace TheBlindMan
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (Lane lane in lanes)
-                lane.Draw(gameTime, spriteBatch);
+            //foreach (Lane lane in lanes)
+                //lane.Draw(gameTime, spriteBatch);
         }
 
         public void AddCar()
         {
-            cars.Add(GenerateCar());
+            //cars.Add(GenerateCar());
         }
 
         public void AddSpawnPoint(Point spawnPoint)
@@ -118,7 +117,7 @@ namespace TheBlindMan
 
         public void Clear()
         {
-            cars.Clear();
+            //cars.Clear();
         }
     }
 }

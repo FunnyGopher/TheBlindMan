@@ -140,21 +140,20 @@ namespace TheBlindMan
                 }
                 else
                 {
-                    float xSpeed = Math.Abs(Players.OldMan.Velocity.X) / Players.OldMan.Velocity.X;
-                    float ySpeed = Math.Abs(Players.OldMan.Velocity.Y) / Players.OldMan.Velocity.Y;
+                    float xDir = Players.OldMan.Velocity.X / Math.Abs(Players.OldMan.Velocity.X);
+                    float yDir = Players.OldMan.Velocity.Y / Math.Abs(Players.OldMan.Velocity.Y);
 
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.OldMan.Bounds);
                     if (overlap.Width < overlap.Height)
-                        Players.OldMan.X += -xSpeed;
+                        Players.OldMan.X += -xDir * overlap.Width;
                     else if(overlap.Height < overlap.Width)
-                        Players.OldMan.Y += -ySpeed;
+                        Players.OldMan.Y += -yDir * overlap.Height;
                     else if(overlap.Height == overlap.Width)
                     {
-                        Players.OldMan.X += -xSpeed;
-                        Players.OldMan.Y += -ySpeed;
+                        Players.OldMan.X += -xDir * overlap.Width;
+                        Players.OldMan.Y += -yDir * overlap.Height;
                     }
                 }
-                
             }
 
             if (bounds.Intersects(Players.Dog.Bounds))
@@ -165,21 +164,20 @@ namespace TheBlindMan
                 }
                 else
                 {
-                    float xSpeed = Math.Abs(Players.Dog.Velocity.X) / Players.Dog.Velocity.X;
-                    float ySpeed = Math.Abs(Players.Dog.Velocity.Y) / Players.Dog.Velocity.Y;
+                    float xDir = Players.Dog.Velocity.X / Math.Abs(Players.Dog.Velocity.X);
+                    float yDir = Players.Dog.Velocity.Y / Math.Abs(Players.Dog.Velocity.Y);
 
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.Dog.Bounds);
-                    if (overlap.Width > overlap.Height)
-                        Players.Dog.X += -xSpeed;
-                    else if (overlap.Height > overlap.Width)
-                        Players.Dog.Y += -ySpeed;
+                    if (overlap.Width < overlap.Height)
+                        Players.Dog.X += -xDir * overlap.Width;
+                    else if (overlap.Height < overlap.Width)
+                        Players.Dog.Y += -yDir * overlap.Height;
                     else if (overlap.Height == overlap.Width)
                     {
-                        Players.Dog.X += -xSpeed;
-                        Players.Dog.Y += -ySpeed;
+                        Players.Dog.X += -xDir * overlap.Width;
+                        Players.Dog.Y += -yDir * overlap.Height;
                     }
                 }
-
             }
         }
 
@@ -192,8 +190,8 @@ namespace TheBlindMan
                 effect = SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(animation.TextureImage, new Vector2(x, y), 
-                animation.GetCurrentFrameRectangle(), Color.White, 0, new Vector2(0, 0), 
-                1, effect, .5f);
+                animation.GetCurrentFrameRectangle(), Color.White, 0, new Vector2(0, 0),
+                1, effect, 1f - (y / 1440f));
         } 
     }
 }

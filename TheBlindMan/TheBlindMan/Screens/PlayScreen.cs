@@ -87,7 +87,7 @@ namespace TheBlindMan
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Draw(bgImage, Vector2.Zero, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1); 
+            spriteBatch.Draw(bgImage, Vector2.Zero, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f); 
             base.Draw(gameTime);
 
             DrawPlayers(gameTime, spriteBatch);

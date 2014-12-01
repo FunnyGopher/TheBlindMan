@@ -99,7 +99,7 @@ namespace TheBlindMan
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            //Console.WriteLine("X: " + X + ", Y: " + Y);
             if (!Alive)
             {
                 return;

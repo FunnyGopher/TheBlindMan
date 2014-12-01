@@ -169,7 +169,7 @@ namespace TheBlindMan
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, 
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied, 
                 null, null, null, null, camera.ViewMatrix);
             base.Draw(gameTime);
             activeScreen.Draw(gameTime);
