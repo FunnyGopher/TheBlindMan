@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlindMan", "TheBlindMan\TheBlindMan\TheBlindMan.csproj", "{AF4A8A1F-C78B-429B-B416-2E29B8BD4710}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "TheBlindManContent", "TheBlindMan\TheBlindManContent\TheBlindManContent.contentproj", "{27657D19-635D-4710-B0BF-3054763E5498}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBlindManContent", "TheBlindMan\TheBlindManContent\TheBlindManContent.contentproj", "{27657D19-635D-4710-B0BF-3054763E5498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

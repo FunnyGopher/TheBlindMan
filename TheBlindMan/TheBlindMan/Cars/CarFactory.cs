@@ -9,26 +9,16 @@ using System.Text;
 
 namespace TheBlindMan
 {
-    class CarManager
+    class CarFactory
     {
-        private TheBlindManGame game;
-        private List<Lane> lane;
-        //private List<Car> carsToRemove;
-        //private List<Point> spawnPoints;
         private Random random = new Random();
-        private const int TOTAL_NUMBER_OF_CARS = 10;
         private const int TOTAL_TYPES_OF_CARS = 1;
         private List<SoundEffect> soundEffects;
         private Car[] preFabCars;
         //public int Count {get{return cars.Count;}}
 
-        public CarManager(TheBlindManGame game)
+        public CarFactory()
         {
-            this.game = game;
-
-            cars = new List<Car>();
-            carsToRemove = new List<Car>();
-            spawnPoints = new List<Point>();
             soundEffects = new List<SoundEffect>();
             preFabCars = new Car[TOTAL_TYPES_OF_CARS];     
         }
@@ -76,7 +66,6 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
-            /*
             if (cars.Count < TOTAL_NUMBER_OF_CARS)
                 AddCar();
 
@@ -91,7 +80,6 @@ namespace TheBlindMan
                 cars.Remove(car);
 
             carsToRemove.Clear();
-             */
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)

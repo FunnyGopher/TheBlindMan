@@ -88,7 +88,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Camera\Camera.cs" />
     <Compile Include="Cars\Car.cs" />
-    <Compile Include="Cars\CarManager.cs" />
+    <Compile Include="Cars\CarFactory.cs" />
     <Compile Include="Cars\Lane.cs" />
     <Compile Include="Screens\CreditScreen.cs" />
     <Compile Include="Player Information\Dog.cs" />
@@ -109,12 +109,6 @@
     <Content Include="Game\GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TheBlindManContent\TheBlindManContent.contentproj">
-      <Name>TheBlindManContent</Name>
-      <XnaReferenceType>Content</XnaReferenceType>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
