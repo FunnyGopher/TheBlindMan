@@ -23,6 +23,11 @@ namespace TheBlindMan
         private SoundEffect growlSound;
         private SoundEffect wimperSound;
 
+        public Vector2 Velocity
+        {
+            get { return velocity; }
+        }
+
         public AudioEmitter Emitter
         {
             get { return emitter; }

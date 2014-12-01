@@ -131,15 +131,18 @@ namespace TheBlindMan
                 }
                 else
                 {
+                    float xSpeed = Math.Abs(Players.OldMan.Velocity.X) / Players.OldMan.Velocity.X;
+                    float ySpeed = Math.Abs(Players.OldMan.Velocity.Y) / Players.OldMan.Velocity.Y;
+
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.OldMan.Bounds);
-                    if (overlap.Width > overlap.Height)
-                        Players.OldMan.X += -Players.OldMan.Speed;
-                    else if(overlap.Height > overlap.Width)
-                        Players.OldMan.Y += -Players.OldMan.Speed;
+                    if (overlap.Width < overlap.Height)
+                        Players.OldMan.X += -xSpeed;
+                    else if(overlap.Height < overlap.Width)
+                        Players.OldMan.Y += -ySpeed;
                     else if(overlap.Height == overlap.Width)
                     {
-                        Players.OldMan.X += -Players.OldMan.Speed;
-                        Players.OldMan.Y += -Players.OldMan.Speed;
+                        Players.OldMan.X += -xSpeed;
+                        Players.OldMan.Y += -ySpeed;
                     }
                 }
                 

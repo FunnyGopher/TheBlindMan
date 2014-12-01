@@ -15,7 +15,7 @@ namespace TheBlindMan
 
         public int MaxCars { get { return maxCars; } }
 
-        public Lane(Point startPosition, Point endPosition)
+        public Lane(Point startPosition, Point endPosition) { }
 
         public void AddCar(Car car)
         {

@@ -29,6 +29,11 @@ namespace TheBlindMan
         private SoundEffect dyingSound;
         private SoundEffect whistleSound;
 
+        public Vector2 Velocity
+        {
+            get { return velocity; }
+        }
+
         public AudioListener AudioListener
         {
             get { return audioListener; }
@@ -40,7 +45,7 @@ namespace TheBlindMan
         public OldMan(PlayerIndex index, float x, float y)
             : base(index, x, y)
         {
-            Speed = 70;
+            Speed = 10;
             Scale = 1;
             feelVector = new Vector2();
             moveVector = new Vector2();
