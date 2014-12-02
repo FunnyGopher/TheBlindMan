@@ -33,7 +33,7 @@ namespace TheBlindMan
         public void AddCar(Car car)
         {
             if (IsOpen())
-            cars.Add(car);
+                cars.Add(car);
         }
 
         public bool IsOpen()
@@ -76,6 +76,13 @@ namespace TheBlindMan
         {
             foreach (Car car in cars)
                 car.Draw(gameTime, spriteBatch);
+        }
+
+        public void Clear()
+        {
+            foreach (Car car in cars)
+                carsToRemove.Add(car);
+            cars.Clear();
         }
     }
 }

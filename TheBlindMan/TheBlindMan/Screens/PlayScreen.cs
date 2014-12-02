@@ -27,12 +27,13 @@ namespace TheBlindMan
             Players.Dog = new Dog(PlayerIndex.Two);
 
             winZone = new Rectangle(460, 100, 60, 40);
-            carFactory = new CarFactory(game);
+            carFactory = new CarFactory();
             parkedCars = new Car[1];
         }
 
         public void Initialize()
         {
+            /*
             List<Point> carSpawnPoints = new List<Point>();
             carSpawnPoints.Add(new Point(-130, 486));
             carSpawnPoints.Add(new Point(1210, 199));
@@ -43,6 +44,11 @@ namespace TheBlindMan
             carSpawnPoints.Add(new Point(-130, 691));
             carSpawnPoints.Add(new Point(1210, 408));
             carFactory.AddSpawnPoints(carSpawnPoints);
+             * */
+
+            List<Lane> carLanes = new List<Lane>();
+            carLanes.Add(new Lane(new Point(-130, 486), new Point(1210, 486)));
+            carFactory.AddLanes(carLanes);
 
             Car parkedCar = carFactory.GenerateCar();
             parkedCar.Animate = false;

@@ -11,14 +11,15 @@ namespace TheBlindMan
 {
     class CarFactory
     {
+        private List<Lane> lanes;
         private Random random = new Random();
         private const int TOTAL_TYPES_OF_CARS = 1;
         private List<SoundEffect> soundEffects;
         private Car[] preFabCars;
-        //public int Count {get{return cars.Count;}}
 
         public CarFactory()
         {
+            lanes = new List<Lane>();
             soundEffects = new List<SoundEffect>();
             preFabCars = new Car[TOTAL_TYPES_OF_CARS];     
         }
@@ -26,31 +27,10 @@ namespace TheBlindMan
         public Car GenerateCar()
         {
             Car car = new Car(preFabCars[random.Next(0, TOTAL_TYPES_OF_CARS)]);
-
-            Point spawnPoint = spawnPoints[random.Next(0, 8)]; 
-            car.X = spawnPoint.X;
-            car.Y = spawnPoint.Y;
-            float speed = (float)random.Next(10, 30);
-            speed *= spawnPoint.X <= 0 ? 1 : -1;
-            car.Speed = speed;
-
             SoundEffect soundEffect = soundEffects[random.Next(0, soundEffects.Count)];
             car.SoundEffect = soundEffect;
 
             return car;
-        }
-
-        private Point getGoodSpawnPoint()
-        {
-            bool goodSpawnFound = false;
-            while (!(goodSpawnFound))
-            {
-                Point SpawnPoint = spawnPoints[random.Next(0, 8)];
-                //foreach (Car car in cars)
-                //{
-                //}
-            }
-            return new Point(1, 1);
         }
 
         public virtual void LoadContent(ContentManager content)
@@ -65,20 +45,8 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
-            if (cars.Count < TOTAL_NUMBER_OF_CARS)
-                AddCar();
-
-            foreach (Car car in cars)
-            {
-                car.Update(gameTime);
-                if (car.X + car.Bounds.Width < 0 - car.Bounds.Width || car.X > game.GraphicsDevice.Viewport.Width + car.Bounds.Width)
-                    carsToRemove.Add(car);
-            }
-
-            foreach (Car car in carsToRemove)
-                cars.Remove(car);
-
-            carsToRemove.Clear();
+            foreach (Lane lane in lanes)
+                lane.Update(gameTime);
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -87,25 +55,26 @@ namespace TheBlindMan
                 //lane.Draw(gameTime, spriteBatch);
         }
 
-        public void AddCar()
+        public void AddCar(Lane lane, Car car)
         {
-            //cars.Add(GenerateCar());
+            lane.AddCar(car);
         }
 
-        public void AddSpawnPoint(Point spawnPoint)
+        public void AddLane(Lane lane)
         {
-            spawnPoints.Add(spawnPoint);
+            lanes.Add(lane);
         }
 
-        public void AddSpawnPoints(List<Point> spawnPoints)
+        public void AddLanes(List<Lane> lanes)
         {
-            foreach (Point point in spawnPoints)
-                this.spawnPoints.Add(point);
+            foreach (Lane lane in lanes)
+                this.lanes.Add(lane);
         }
 
         public void Clear()
         {
-            //cars.Clear();
+            foreach (Lane lane in lanes)
+                lane.Clear();
         }
     }
 }
