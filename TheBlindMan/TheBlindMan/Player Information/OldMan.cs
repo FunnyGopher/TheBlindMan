@@ -111,6 +111,8 @@ namespace TheBlindMan
             FeelingMechanic();
             Move(gameTime);
             Actions();
+
+            Console.WriteLine("X: " + X + ", Y: " + Y);
         }
 
         // Movement

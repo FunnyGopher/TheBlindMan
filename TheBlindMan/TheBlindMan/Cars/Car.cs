@@ -13,7 +13,7 @@ namespace TheBlindMan
         private float x, y;
         private float speed;
         private Animation animation;
-        private bool animate;
+        private bool parked;
 
         private Rectangle bounds;
         private int boundsHeight;
@@ -25,7 +25,8 @@ namespace TheBlindMan
         public float X
         {
             get { return this.x; }
-            set { this.x = value; }
+            set
+            { this.x = value; }
         }
 
         public float Y
@@ -40,10 +41,15 @@ namespace TheBlindMan
             set { this.speed = value; }
         }
 
-        public bool Animate
+        public Animation Animation
         {
-            get { return this.animate; }
-            set { this.animate = value; }
+            get { return animation; }
+        }
+
+        public bool Parked
+        {
+            get { return this.parked; }
+            set { this.parked = value; }
         }
 
         public Rectangle Bounds
@@ -80,7 +86,7 @@ namespace TheBlindMan
             this.y = y;
             this.speed = speed;
             this.animation = animation;
-            this.animate = true;
+            this.parked = false;
 
             this.boundsHeight = boundsHeight;
             bounds = new Rectangle((int)X, (int)Y + animation.FrameSize.Y - boundsHeight, (int)animation.FrameSize.X, boundsHeight);
@@ -90,14 +96,21 @@ namespace TheBlindMan
 
         public virtual void Update(GameTime gameTime)
         {
-            if(speed > 0)
+            if (!parked)
                 animation.Update(gameTime);
+
             Move(gameTime);
 
-            if(speed > 0)
+            if (!parked)
                 PlaySound();
+                
             Collide();
-            
+        }
+
+        public void Park()
+        {
+            Animation.SheetSize = new Point(1, 1);
+            parked = true;
         }
 
         private void Move(GameTime gameTime)
@@ -136,7 +149,7 @@ namespace TheBlindMan
         {
             if (bounds.Intersects(Players.OldMan.Bounds))
             {
-                if(speed > 0)
+                if(!parked)
                 {
                     Players.OldMan.Hit();
                 }
@@ -160,7 +173,7 @@ namespace TheBlindMan
 
             if (bounds.Intersects(Players.Dog.Bounds))
             {
-                if (speed > 0)
+                if (!parked)
                 {
                     Players.Dog.Hit();
                 }

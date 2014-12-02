@@ -31,6 +31,12 @@ namespace TheBlindMan
             get { return frameSize; }
         }
 
+        public Point SheetSize
+        {
+            get { return sheetSize; }
+            set { sheetSize = value; }
+        }
+
         public Animation(Texture2D textureImage, Point framesize, Point currentFrame, Point sheetSize)
             : this(textureImage, framesize, currentFrame, sheetSize, DEFAULT_MILLISECONDS_PER_FRAME)
         {

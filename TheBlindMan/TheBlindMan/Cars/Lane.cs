@@ -45,7 +45,7 @@ namespace TheBlindMan
             if (IsOpen())
             {
                 car.X = startPosition.X;
-                car.Y = startPosition.Y;
+                car.Y = startPosition.Y - car.Animation.FrameSize.Y;
 
                 car.Speed = speed;
                 if(direction < 0)

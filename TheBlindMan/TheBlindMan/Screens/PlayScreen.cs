@@ -26,6 +26,9 @@ namespace TheBlindMan
             Players.OldMan = new OldMan(PlayerIndex.One);
             Players.Dog = new Dog(PlayerIndex.Two);
 
+            Players.OldMan.Scale = 1.2f;
+            Players.Dog.Scale = 1.2f;
+
             winZone = new Rectangle(460, 100, 60, 40);
             carFactory = new CarFactory();
             parkedCars = new Car[1];
@@ -50,23 +53,22 @@ namespace TheBlindMan
             List<Lane> carLanes = new List<Lane>();
 
             // These lanes are the top 4 lanes
-            carLanes.Add(new Lane(new Point(1210, 199), new Point(-130, 199), 10, 0, 1, 3));
-            carLanes.Add(new Lane(new Point(1210, 272), new Point(-130, 272), 15, 15));
-            carLanes.Add(new Lane(new Point(1210, 339), new Point(-130, 339), 20, 35));
-            carLanes.Add(new Lane(new Point(1210, 408), new Point(-130, 408), 25, 55));
+            carLanes.Add(new Lane(new Point(1400, 252), new Point(-400, 252), 10, 0, 1, 3));
+            carLanes.Add(new Lane(new Point(1400, 321), new Point(-400, 321), 15, 15));
+            carLanes.Add(new Lane(new Point(1400, 390), new Point(-400, 390), 20, 35));
+            carLanes.Add(new Lane(new Point(1400, 456), new Point(-400, 456), 25, 55));
 
-            carLanes.Add(new Lane(new Point(-130, 486), new Point(1210, 486), 25, 60));
-            carLanes.Add(new Lane(new Point(-130, 554), new Point(1210, 554), 20, 40));
-            carLanes.Add(new Lane(new Point(-130, 624), new Point(1210, 624), 15, 20));
-            carLanes.Add(new Lane(new Point(-130, 691), new Point(1210, 691), 10, 10, 1, 3));            
+            carLanes.Add(new Lane(new Point(-400, 536), new Point(1400, 536), 25, 60));
+            carLanes.Add(new Lane(new Point(-400, 604), new Point(1400, 604), 20, 40));
+            carLanes.Add(new Lane(new Point(-400, 671), new Point(1400, 671), 15, 20));
+            carLanes.Add(new Lane(new Point(-400, 737), new Point(1400, 737), 10, 10, 1, 3));            
 
             carFactory.AddLanes(carLanes);
 
             Car parkedCar = carFactory.GenerateCar();
-            parkedCar.Animate = false;
+            parkedCar.Park();
             parkedCar.X = 300;
             parkedCar.Y = 800;
-            parkedCar.Speed = 0;
             parkedCars[0] = parkedCar;
         }
 
@@ -95,8 +97,6 @@ namespace TheBlindMan
 
             foreach (Car car in parkedCars)
                 car.Update(gameTime);
-
-
 
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);
