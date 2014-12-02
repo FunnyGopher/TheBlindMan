@@ -27,30 +27,10 @@ namespace TheBlindMan
         public Car GenerateCar()
         {
             Car car = new Car(preFabCars[random.Next(0, TOTAL_TYPES_OF_CARS)]);
-             
-            car.X = spawnPoint.X;
-            car.Y = spawnPoint.Y;
-            float speed = (float)random.Next(10, 30);
-            speed *= spawnPoint.X <= 0 ? 1 : -1;
-            car.Speed = speed;
-
             SoundEffect soundEffect = soundEffects[random.Next(0, soundEffects.Count)];
             car.SoundEffect = soundEffect;
 
             return car;
-        }
-
-        private Point getGoodSpawnPoint()
-        {
-            bool goodSpawnFound = false;
-            while (!(goodSpawnFound))
-            {
-                Point SpawnPoint = spawnPoints[random.Next(0, 8)];
-                foreach (Car car in cars)
-                {
-                }
-            }
-            return new Point(1, 1);
         }
 
         public virtual void LoadContent(ContentManager content)
@@ -75,9 +55,9 @@ namespace TheBlindMan
                 lane.Draw(gameTime, spriteBatch);
         }
 
-        public void AddCar()
+        public void AddCar(Lane lane, Car car)
         {
-
+            lane.AddCar(car);
         }
 
         public void AddLane(Lane lane)
@@ -85,10 +65,16 @@ namespace TheBlindMan
             lanes.Add(lane);
         }
 
-        public void AddSpawnPoints(List<Lane> lanes)
+        public void AddLanes(List<Lane> lanes)
         {
             foreach (Lane lane in lanes)
                 this.lanes.Add(lane);
+        }
+
+        public void Clear()
+        {
+            foreach (Lane lane in lanes)
+                lane.Clear();
         }
     }
 }
