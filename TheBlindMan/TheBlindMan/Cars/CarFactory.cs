@@ -80,7 +80,7 @@ namespace TheBlindMan
             {
                 randomNumb = random.Next(0, openLanes.Count - 1);
                 AddCar(openLanes[randomNumb], GenerateCar());
-        }
+            }
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
