@@ -30,6 +30,8 @@ namespace TheBlindMan
         private SoundEffect dyingSound;
         private SoundEffect whistleSound;
 
+        private Icon exclamationPoint;
+
         public Vector2 Velocity
         {
             get { return velocity; }
@@ -106,6 +108,8 @@ namespace TheBlindMan
 
             dyingSound = content.Load<SoundEffect>(@"Audio/manDying");
             whistleSound = content.Load<SoundEffect>(@"Audio/whistle");
+
+            exclamationPoint = new Icon(content.Load<Texture2D>(@"Images/OldMan/exclamation_point"), false);
         }
 
         public override void Update(GameTime gameTime)
@@ -120,8 +124,15 @@ namespace TheBlindMan
             Move(gameTime);
             UpdateBounds();
             Actions();
+            UpdateExclamationPoint();
 
             Console.WriteLine("X: " + X + ", Y: " + Y);
+        }
+
+        private void UpdateExclamationPoint()
+        {
+            exclamationPoint.X = (X + (Animations[CurrentAnimationName].FrameSize.X) / 2) - (exclamationPoint.Texture.Width / 2);
+            exclamationPoint.Y = (Y - exclamationPoint.Texture.Height + 7);
         }
 
         // Movement
@@ -311,14 +322,18 @@ namespace TheBlindMan
         // Actions
         private void Actions()
         {
-            if (GamePadState.Buttons.RightStick == ButtonState.Pressed && hasAlerted == false)
+            KeyboardState keyState = Keyboard.GetState();
+
+            if ((GamePadState.Buttons.RightStick == ButtonState.Pressed || keyState.IsKeyDown(Keys.L)) && hasAlerted == false)
             {
                 Alert();
+                exclamationPoint.Visible = true;
                 hasAlerted = true;
             }
 
-            if (GamePadState.Buttons.RightStick == ButtonState.Released)
+            if (GamePadState.Buttons.RightStick == ButtonState.Released || keyState.IsKeyUp(Keys.L))
             {
+                exclamationPoint.Visible = false;
                 hasAlerted = false;
             }
         }
@@ -361,6 +376,13 @@ namespace TheBlindMan
 
             degrees = radians * (360d / (2d * Math.PI));
             return degrees;
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+            if(exclamationPoint.Visible)
+                exclamationPoint.Draw(gameTime, spriteBatch);
         }
     }
 }
