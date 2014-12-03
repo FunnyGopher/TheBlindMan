@@ -23,12 +23,6 @@ namespace TheBlindMan
         public PlayScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
-            Players.OldMan = new OldMan(PlayerIndex.One);
-            Players.Dog = new Dog(PlayerIndex.Two);
-
-            Players.OldMan.Scale = 1.2f;
-            Players.Dog.Scale = 1.2f;
-
             winZone = new Rectangle(460, 100, 60, 40);
             carFactory = new CarFactory();
             parkedCars = new Car[1];
@@ -48,6 +42,10 @@ namespace TheBlindMan
             carSpawnPoints.Add(new Point(1210, 408));
             carFactory.AddSpawnPoints(carSpawnPoints);
              * */
+
+            Players.OldMan.Scale = 1.2f;
+            Players.Dog.Scale = 1.2f;
+
             Console.WriteLine("Makin' some lanes");
 
             List<Lane> carLanes = new List<Lane>();
@@ -77,6 +75,9 @@ namespace TheBlindMan
             this.bgImage = content.Load<Texture2D>(@"Images/Backgrounds/Level");
             this.bgSound = content.Load<SoundEffect>(@"Audio/trafAmbi");
             this.bgSoundInstance = bgSound.CreateInstance();
+
+            Players.OldMan = new OldMan(PlayerIndex.One);
+            Players.Dog = new Dog(PlayerIndex.Two);
 
             Players.OldMan.LoadContent(content);
             Players.Dog.LoadContent(content);

@@ -15,6 +15,7 @@ namespace TheBlindMan
         private const double MIN_PERCENT_FOR_LEFT_VIB = .8d;
         private const double RIGHT_VIB_PENALTY = .02d;
         private const int MAX_DOG_DISTANCE = 64;
+        private const int OLDMAN_BOUNDS_HEIGHT = 18;
 
         private Vector2 feelVector;
         private double leftVibPercentage;
@@ -52,9 +53,16 @@ namespace TheBlindMan
             velocity = new Vector2(0, 0);
             hasAlerted = false;
 
-            Bounds = new Rectangle((int)X, (int)Y + (int)(16 * Scale), (int)(14 * Scale), (int)(16 * Scale));
+            Bounds = new Rectangle((int)X, (int)Y, 0, 0);
 
             audioListener = new AudioListener();
+        }
+
+        private void UpdateBounds()
+        {
+            Animation animation = Animations[CurrentAnimationName];
+            Bounds = new Rectangle((int)X, (int)Y + (int)(animation.FrameSize.Y * Scale) - (int)(OLDMAN_BOUNDS_HEIGHT * Scale),
+                (int)(animation.FrameSize.X * Scale), (int)(OLDMAN_BOUNDS_HEIGHT * Scale));
         }
 
         public override void LoadContent(ContentManager content)
@@ -110,6 +118,7 @@ namespace TheBlindMan
 
             FeelingMechanic();
             Move(gameTime);
+            UpdateBounds();
             Actions();
 
             Console.WriteLine("X: " + X + ", Y: " + Y);

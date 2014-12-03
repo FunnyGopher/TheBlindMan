@@ -16,6 +16,7 @@ namespace TheBlindMan
         private Dictionary<string, Animation> animations;
         private bool alive;
         private string currentAnimationName;
+        private Animation animation;
         private string direction;
         private Rectangle bounds;
         private float scale;
@@ -51,6 +52,11 @@ namespace TheBlindMan
         {
             get { return this.currentAnimationName; }
             set { this.currentAnimationName = value;}
+        }
+
+        public Dictionary<string, Animation> Animations
+        {
+            get { return animations; }
         }
 
         public string Direction
