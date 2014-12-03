@@ -106,7 +106,16 @@ namespace TheBlindMan
             }
 
             Move(gameTime);
+            UpdateBounds();
             Actions();
+        }
+
+        private void UpdateBounds()
+        {
+            Animation animation = Animations[CurrentAnimationName];
+            int boundsHeight = (int)(animation.FrameSize.Y * Scale * .3334f);
+            Bounds = new Rectangle((int)X, (int)Y + (int)(animation.FrameSize.Y * Scale) - boundsHeight,
+                (int)(animation.FrameSize.X * Scale), boundsHeight);
         }
 
         // Movement

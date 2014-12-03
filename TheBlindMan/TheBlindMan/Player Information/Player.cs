@@ -130,11 +130,11 @@ namespace TheBlindMan
             if (animations.Keys.Contains(currentAnimationName))
             {
                 Animation currentAnimation = animations[currentAnimationName];
-                /*spriteBatch.Draw(currentAnimation.TextureImage, new Vector2(x,y),
-                    currentAnimation.GetCurrentFrameRectangle(), Color.White);*/
+                float bottomEdge = y + currentAnimation.FrameSize.Y;
+
                 spriteBatch.Draw(currentAnimation.TextureImage, new Vector2(x, y),
                 currentAnimation.GetCurrentFrameRectangle(), Color.White, 0, new Vector2(0, 0),
-                scale, SpriteEffects.None, 1f - (y / 1440f));
+                scale, SpriteEffects.None, 1f - (bottomEdge / 1440f));
             }
         }
 

@@ -23,26 +23,13 @@ namespace TheBlindMan
         public PlayScreen(TheBlindManGame game, SpriteBatch spriteBatch)
             : base(game, spriteBatch)
         {
-            winZone = new Rectangle(460, 100, 60, 40);
+            winZone = new Rectangle(0, 0, 1080, 129);
             carFactory = new CarFactory();
             parkedCars = new Car[1];
         }
 
         public void Initialize()
         {
-            /*
-            List<Point> carSpawnPoints = new List<Point>();
-            carSpawnPoints.Add(new Point(-130, 486));
-            carSpawnPoints.Add(new Point(1210, 199));
-            carSpawnPoints.Add(new Point(-130, 554));
-            carSpawnPoints.Add(new Point(1210, 272));
-            carSpawnPoints.Add(new Point(-130, 624));
-            carSpawnPoints.Add(new Point(1210, 339));
-            carSpawnPoints.Add(new Point(-130, 691));
-            carSpawnPoints.Add(new Point(1210, 408));
-            carFactory.AddSpawnPoints(carSpawnPoints);
-             * */
-
             Players.OldMan.Scale = 1.2f;
             Players.Dog.Scale = 1.2f;
 
@@ -51,7 +38,7 @@ namespace TheBlindMan
             List<Lane> carLanes = new List<Lane>();
 
             // These lanes are the top 4 lanes
-            carLanes.Add(new Lane(new Point(1400, 252), new Point(-400, 252), 10, 0, 1, 3));
+            carLanes.Add(new Lane(new Point(1400, 252), new Point(-400, 252), 10, 10, 1, 3));
             carLanes.Add(new Lane(new Point(1400, 321), new Point(-400, 321), 15, 15));
             carLanes.Add(new Lane(new Point(1400, 390), new Point(-400, 390), 20, 35));
             carLanes.Add(new Lane(new Point(1400, 456), new Point(-400, 456), 25, 55));
@@ -101,6 +88,9 @@ namespace TheBlindMan
 
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);
+
+            if (float.IsNaN(Players.OldMan.X) || float.IsNaN(Players.OldMan.Y))
+                SpawnPlayers();
 
             if (winZone.Intersects(Players.OldMan.Bounds))
                 game.ActiveScreen = game.StartScreen;

@@ -158,6 +158,8 @@ namespace TheBlindMan
                     float xDir = Players.OldMan.Velocity.X / Math.Abs(Players.OldMan.Velocity.X);
                     float yDir = Players.OldMan.Velocity.Y / Math.Abs(Players.OldMan.Velocity.Y);
 
+                    Console.WriteLine("xDir: " + xDir + ", yDir: " + yDir);
+
                     Rectangle overlap = Rectangle.Intersect(bounds, Players.OldMan.Bounds);
                     if (overlap.Width < overlap.Height)
                         Players.OldMan.X += -xDir * overlap.Width;
@@ -204,9 +206,11 @@ namespace TheBlindMan
             else
                 effect = SpriteEffects.FlipHorizontally;
 
+            float bottomEdge = y + animation.FrameSize.Y;
+
             spriteBatch.Draw(animation.TextureImage, new Vector2(x, y), 
                 animation.GetCurrentFrameRectangle(), Color.White, 0, new Vector2(0, 0),
-                1, effect, 1f - (y / 1440f));
+                1, effect, 1f - (bottomEdge / 1440f));
         } 
     }
 }
