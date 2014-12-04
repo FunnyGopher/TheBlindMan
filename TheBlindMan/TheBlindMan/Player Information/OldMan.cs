@@ -393,8 +393,13 @@ namespace TheBlindMan
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-            if(exclamationPoint.Visible)
-                exclamationPoint.Draw(gameTime, spriteBatch);
+
+            if (exclamationPoint.Visible)
+            {
+                spriteBatch.Draw(exclamationPoint.Texture, new Vector2(exclamationPoint.X, exclamationPoint.Y),
+                     exclamationPoint.Texture.Bounds, Color.White, 0, new Vector2(0, 0),
+                     1, SpriteEffects.None, 1f - ((Y + CurrentAnimation.FrameSize.Y) / 1440f));
+            }
         }
     }
 }

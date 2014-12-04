@@ -35,7 +35,7 @@ namespace TheBlindMan
         {
             int lineSpace = 20;
             menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Start"), true));
-            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Help"), true));
+            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/HowToPlay"), true));
             menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Credits"), true));
             menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Quit"), true));
 

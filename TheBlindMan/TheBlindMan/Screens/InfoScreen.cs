@@ -20,7 +20,7 @@ namespace TheBlindMan
 
         public override void LoadContent(ContentManager content)
         {
-            backgroundImage = content.Load<Texture2D>(@"Images/Backgrounds/Controls");
+            backgroundImage = content.Load<Texture2D>(@"Images/Backgrounds/HowToPlay");
             base.LoadContent();
         }
 
