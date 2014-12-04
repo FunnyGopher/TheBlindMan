@@ -16,18 +16,16 @@ namespace TheBlindMan
     {
         List<GameComponent> components = new List<GameComponent>();
         protected TheBlindManGame game;
-        protected SpriteBatch spriteBatch;
 
         public List<GameComponent> Components
         {
             get { return components; }
         }
 
-        public GameScreen(TheBlindManGame game, SpriteBatch spriteBatch)
+        public GameScreen(TheBlindManGame game)
             : base(game)
         {
             this.game = game;
-            this.spriteBatch = spriteBatch;
             Hide();
         }
 
@@ -56,6 +54,11 @@ namespace TheBlindMan
                 if (component is DrawableGameComponent &&
                     ((DrawableGameComponent)component).Visible)
                     ((DrawableGameComponent)component).Draw(gameTime);
+        }
+
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            Draw(gameTime);
         }
 
         public virtual void Start()

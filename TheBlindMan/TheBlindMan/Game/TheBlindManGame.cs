@@ -90,20 +90,20 @@ namespace TheBlindMan
         protected override void Initialize()
         {
             base.Initialize();
-            startScreen = new StartScreen(this, spriteBatch);
+            startScreen = new StartScreen(this);
             startScreen.LoadContent(Content);
             Components.Add(startScreen);
 
-            playScreen = new PlayScreen(this, spriteBatch);
+            playScreen = new PlayScreen(this);
             playScreen.LoadContent(Content);
             playScreen.Initialize();
             Components.Add(playScreen);
 
-            infoScreen = new InfoScreen(this, spriteBatch);
+            infoScreen = new InfoScreen(this);
             infoScreen.LoadContent(Content);
             Components.Add(infoScreen);
 
-            creditScreen = new CreditScreen(this, spriteBatch);
+            creditScreen = new CreditScreen(this);
             creditScreen.LoadContent(Content);
             Components.Add(creditScreen);
 
@@ -169,10 +169,15 @@ namespace TheBlindMan
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied, 
+            if (activeScreen == StartScreen)
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 null, null, null, null, camera.ViewMatrix);
+            else 
+                spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, 
+                    null, null, null, null, camera.ViewMatrix);
             base.Draw(gameTime);
-            activeScreen.Draw(gameTime);
+
+            activeScreen.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
         #endregion

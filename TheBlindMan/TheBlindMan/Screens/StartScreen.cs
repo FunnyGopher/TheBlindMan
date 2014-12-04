@@ -11,43 +11,60 @@ namespace TheBlindMan
 {
     public class StartScreen : GameScreen
     {
-        private MenuComponent menuComponent;
-        private string[] menuItems;
+        private Menu menu;
+        private List<Icon> menuItems;
 
-        private Texture2D image;
-        private Rectangle imageRectangle;
+        private Texture2D backgroundImage;
 
         private bool hasPressedEnter;
 
         private int SelectedIndex
         {
-            get { return menuComponent.SelectedIndex; }
-            set { menuComponent.SelectedIndex = value; }
+            get { return menu.SelectedIndex; }
+            set { menu.SelectedIndex = value; }
         }
 
-        public StartScreen(TheBlindManGame game, SpriteBatch spriteBatch)
-            : base(game, spriteBatch)
+        public StartScreen(TheBlindManGame game)
+            : base(game)
         {
-            menuItems = new string[]{ "Start Game", "Controls", "Credits", "End Game" };
-            imageRectangle = new Rectangle(
-                0, 0, Game.Window.ClientBounds.Width,
-                Game.Window.ClientBounds.Height);
+            menuItems = new List<Icon>();
             hasPressedEnter = false;
         }
 
         public override void LoadContent(ContentManager content)
         {
-            SpriteFont font = content.Load<SpriteFont>(@"Font/menuFont");
-            menuComponent = new MenuComponent(game, spriteBatch, font, menuItems);
-            Components.Add(menuComponent);
+            int lineSpace = 20;
+            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Start"), true));
+            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Help"), true));
+            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Credits"), true));
+            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Quit"), true));
 
-            image = content.Load<Texture2D>(@"Images/Backgrounds/Title");
+            backgroundImage = content.Load<Texture2D>(@"Images/Backgrounds/Title");
+
+            for (int i = 0; i < menuItems.Count; i++)
+            {
+                Icon icon = menuItems[i];
+                icon.X = (backgroundImage.Width / 2) - (icon.Texture.Width / 2);
+
+                if (i == 0)
+                    icon.Y = 275;
+                else
+                {
+                    Icon prevIcon = menuItems[i - 1];
+                    icon.Y = prevIcon.Y + prevIcon.Texture.Height + lineSpace;
+                }
+            }
+
+            menu = new Menu(menuItems);
+
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            menu.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) ||
                 GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
@@ -79,10 +96,11 @@ namespace TheBlindMan
                 hasPressedEnter = false;
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(image, imageRectangle, Color.White);
-            base.Draw(gameTime);
+            spriteBatch.Draw(backgroundImage, backgroundImage.Bounds, Color.White);
+            menu.Draw(gameTime, spriteBatch);
+            base.Draw(gameTime, spriteBatch);
         }
     }
 }

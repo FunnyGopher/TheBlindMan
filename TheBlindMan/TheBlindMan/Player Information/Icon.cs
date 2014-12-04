@@ -7,7 +7,7 @@ using System.Text;
 
 namespace TheBlindMan
 {
-    class Icon
+    public class Icon
     {
         private float x;
         private float y;

@@ -14,8 +14,8 @@ namespace TheBlindMan
         private Texture2D image;
         private Rectangle imageRectangle;
 
-        public CreditScreen(TheBlindManGame game, SpriteBatch spriteBatch)
-            : base(game, spriteBatch)
+        public CreditScreen(TheBlindManGame game)
+            : base(game)
         {
             imageRectangle = new Rectangle(
                 0, 0, Game.Window.ClientBounds.Width,
@@ -37,10 +37,10 @@ namespace TheBlindMan
                 game.ActiveScreen = game.StartScreen;
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(image, imageRectangle, Color.White);
-            base.Draw(gameTime);
+            base.Draw(gameTime, spriteBatch);
         }
     }
 }

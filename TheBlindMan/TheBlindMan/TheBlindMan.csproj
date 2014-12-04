@@ -96,7 +96,7 @@
     <Compile Include="Game\TheBlindManGame.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\InfoScreen.cs" />
-    <Compile Include="Screens\Screen Components\MenuComponent.cs" />
+    <Compile Include="Screens\Screen Components\Menu.cs" />
     <Compile Include="Player Information\OldMan.cs" />
     <Compile Include="Player Information\Player.cs" />
     <Compile Include="Player Information\Players.cs" />

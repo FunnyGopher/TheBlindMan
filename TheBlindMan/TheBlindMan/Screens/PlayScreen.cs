@@ -20,8 +20,8 @@ namespace TheBlindMan
         private Rectangle winZone;
         private List<Car> parkedCars;
 
-        public PlayScreen(TheBlindManGame game, SpriteBatch spriteBatch)
-            : base(game, spriteBatch)
+        public PlayScreen(TheBlindManGame game)
+            : base(game)
         {
             winZone = new Rectangle(0, 0, 1080, 129);
             carFactory = new CarFactory();
@@ -106,15 +106,16 @@ namespace TheBlindMan
                 game.ActiveScreen = game.StartScreen;
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(bgImage, Vector2.Zero, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f); 
-            base.Draw(gameTime);
 
             DrawPlayers(gameTime, spriteBatch);
             carFactory.Draw(gameTime, spriteBatch);
             foreach (Car car in parkedCars)
                 car.Draw(gameTime, spriteBatch);
+
+            base.Draw(gameTime, spriteBatch);
         }
 
         private void DrawPlayers(GameTime gameTime, SpriteBatch spriteBatch)
