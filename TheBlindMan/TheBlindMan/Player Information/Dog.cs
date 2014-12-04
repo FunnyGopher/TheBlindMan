@@ -350,6 +350,8 @@ namespace TheBlindMan
                 Y = 0;
                 UpdateBounds();
                 Alive = false;
+                barkIcon.Visible = false;
+                growlIcon.Visible = false;
             }
         }
 
