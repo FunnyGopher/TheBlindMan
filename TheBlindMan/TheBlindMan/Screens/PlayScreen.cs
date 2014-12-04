@@ -64,8 +64,6 @@ namespace TheBlindMan
             parkedCars.Add(carFactory.GenerateParkedCar(-80, 1240));
         }
 
-        
-
         public override void LoadContent(ContentManager content)
         {
             this.bgImage = content.Load<Texture2D>(@"Images/Backgrounds/Level");
@@ -86,16 +84,15 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) ||
-                GamePad.GetState(Players.OldMan.PlayerIndex).Buttons.Back == ButtonState.Pressed)
-                game.ActiveScreen = game.StartScreen;
+            if (Keyboard.GetState().IsKeyDown(Keys.P) ||
+                GamePad.GetState(Players.OldMan.PlayerIndex).Buttons.Start == ButtonState.Pressed)
+                Game.ActiveScreen = Game.PauseScreen;
 
             carFactory.Update(gameTime);
 
             foreach (Car car in parkedCars)
-            {
                 car.Update(gameTime);
-            }
+
             Players.OldMan.Update(gameTime);
             Players.Dog.Update(gameTime);
 
@@ -103,7 +100,7 @@ namespace TheBlindMan
                 InitialSpawn();
 
             if (winZone.Intersects(Players.OldMan.Bounds))
-                game.ActiveScreen = game.StartScreen;
+                Game.ActiveScreen = Game.StartScreen;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

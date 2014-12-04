@@ -32,6 +32,7 @@ namespace TheBlindMan
         InfoScreen infoScreen;
         CreditScreen creditScreen;
         PlayScreen playScreen;
+        PauseScreen pauseScreen;
 
         Camera camera = new Camera();
         Vector2 camPos = new Vector2(0,0);
@@ -58,6 +59,7 @@ namespace TheBlindMan
         public PlayScreen PlayScreen
         {
             get { return playScreen; }
+            set { playScreen = value; }
         }
 
         public InfoScreen InfoScreen
@@ -68,6 +70,11 @@ namespace TheBlindMan
         public CreditScreen CreditScreen
         {
             get { return creditScreen; }
+        }
+
+        public PauseScreen PauseScreen
+        {
+            get { return pauseScreen; }
         }
         #endregion
 
@@ -106,6 +113,10 @@ namespace TheBlindMan
             creditScreen = new CreditScreen(this);
             creditScreen.LoadContent(Content);
             Components.Add(creditScreen);
+
+            pauseScreen = new PauseScreen(this);
+            pauseScreen.LoadContent(Content);
+            Components.Add(pauseScreen);
 
             activeScreen = StartScreen;
             activeScreen.Start();
@@ -169,7 +180,7 @@ namespace TheBlindMan
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            if (activeScreen == StartScreen)
+            if (activeScreen == StartScreen || activeScreen == PauseScreen)
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 null, null, null, null, camera.ViewMatrix);
             else 

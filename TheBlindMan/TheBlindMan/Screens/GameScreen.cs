@@ -14,12 +14,17 @@ namespace TheBlindMan
 {
     public abstract class GameScreen : Microsoft.Xna.Framework.DrawableGameComponent
     {
-        List<GameComponent> components = new List<GameComponent>();
-        protected TheBlindManGame game;
+        private List<GameComponent> components = new List<GameComponent>();
+        private TheBlindManGame game;
 
         public List<GameComponent> Components
         {
             get { return components; }
+        }
+
+        public TheBlindManGame Game
+        {
+            get { return game; }
         }
 
         public GameScreen(TheBlindManGame game)

@@ -49,5 +49,10 @@ namespace TheBlindMan
         {
             spriteBatch.Draw(texture, new Vector2(x, y), Color.White);
         }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Color color)
+        {
+            spriteBatch.Draw(texture, new Vector2(x, y), color);
+        }
     }
 }

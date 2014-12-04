@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TheBlindMan
 {
-    public class StartScreen : GameScreen
+    public class PauseScreen : GameScreen
     {
         private Menu menu;
         private List<Icon> menuItems;
@@ -24,7 +24,7 @@ namespace TheBlindMan
             set { menu.SelectedIndex = value; }
         }
 
-        public StartScreen(TheBlindManGame game)
+        public PauseScreen(TheBlindManGame game)
             : base(game)
         {
             menuItems = new List<Icon>();
@@ -34,12 +34,11 @@ namespace TheBlindMan
         public override void LoadContent(ContentManager content)
         {
             int lineSpace = 20;
-            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Start"), true));
-            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Help"), true));
-            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Credits"), true));
+            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Continue"), true));
+            menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Restart"), true));
             menuItems.Add(new Icon(content.Load<Texture2D>(@"Images/Menu/Quit"), true));
 
-            backgroundImage = content.Load<Texture2D>(@"Images/Backgrounds/Title");
+            backgroundImage = content.Load<Texture2D>(@"Images/Backgrounds/Pause");
 
             for (int i = 0; i < menuItems.Count; i++)
             {
@@ -79,14 +78,14 @@ namespace TheBlindMan
                         hasPressedEnter = false;
                         break;
                     case 1:
-                        Game.ActiveScreen = Game.InfoScreen;
+                        Game.Components.Remove(Game.PlayScreen);
+                        Game.PlayScreen = new PlayScreen(Game);
+                        Game.PlayScreen.LoadContent(Game.Content);
+                        Game.PlayScreen.Initialize();
+                        Components.Add(Game.PlayScreen);
                         hasPressedEnter = false;
                         break;
                     case 2:
-                        Game.ActiveScreen = Game.CreditScreen;
-                        hasPressedEnter = false;
-                        break;
-                    case 3:
                         Game.Exit();
                         break;
                 }

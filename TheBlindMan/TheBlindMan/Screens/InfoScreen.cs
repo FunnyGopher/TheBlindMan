@@ -11,20 +11,16 @@ namespace TheBlindMan
 {
     public class InfoScreen : GameScreen
     {
-        private Texture2D image;
-        private Rectangle imageRectangle;
+        private Texture2D backgroundImage;
 
         public InfoScreen(TheBlindManGame game)
             : base(game)
         {
-            imageRectangle = new Rectangle(
-                0, 0, Game.Window.ClientBounds.Width,
-                Game.Window.ClientBounds.Height);
         }
 
         public override void LoadContent(ContentManager content)
         {
-            image = content.Load<Texture2D>(@"Images/Backgrounds/Controls");
+            backgroundImage = content.Load<Texture2D>(@"Images/Backgrounds/Controls");
             base.LoadContent();
         }
 
@@ -34,12 +30,12 @@ namespace TheBlindMan
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) ||
                 GamePad.GetState(PlayerIndex.One).Buttons.B == ButtonState.Pressed)
-                game.ActiveScreen = game.StartScreen;
+                Game.ActiveScreen = Game.StartScreen;
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(image, imageRectangle, Color.White);
+            spriteBatch.Draw(backgroundImage, backgroundImage.Bounds, Color.White);
             base.Draw(gameTime, spriteBatch);
         }
     }

@@ -78,6 +78,9 @@ namespace TheBlindMan
         {
             foreach (Icon item in menuItems)
                 item.Draw(gameTime, spriteBatch);
+
+            Icon selectedIcon = menuItems[selectedIndex];
+            selectedIcon.Draw(gameTime, spriteBatch, Color.Yellow);
         }
     }
 }
