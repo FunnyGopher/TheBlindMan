@@ -84,9 +84,11 @@ namespace TheBlindMan
         {
             base.Update(gameTime);
 
+            /*
             if (Keyboard.GetState().IsKeyDown(Keys.P) ||
                 GamePad.GetState(Players.OldMan.PlayerIndex).Buttons.Start == ButtonState.Pressed)
                 Game.ActiveScreen = Game.PauseScreen;
+            */
 
             carFactory.Update(gameTime);
 
